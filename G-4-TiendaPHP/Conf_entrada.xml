@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="es.uclm.grupo4">
+
+<head>
+ <idShop></idShop>
+ <idClient></idClient>
+</head>
+<body>
+<message> Se ha entrado en la tienda</message>
+</body>
+</root>
