@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="es.uclm.grupo6">
+	<head>
+		<tipo>
+			entrada_tienda
+		</tipo>
+		<idcliente>
+			idc1
+		</idcliente>
+		<idtienda>
+			idt1
+		</idtienda>
+		<time>
+			00:00:00
+		</time>
+	</head>
+	<body>
+		<lista_productos>
+			<producto>
+				<id_producto>
+					p1
+				</id_producto>
+				<cantidad>
+					3
+				</cantidad>
+			</producto>
+		</lista_productos>
+	</body>
+</root>
