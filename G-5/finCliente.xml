@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmnls:>
+<head>
+    <tipo>tipo</tipo>
+    <idcliente>id</idcliente>
+    <time>tiempo</time>
+</head>
+	<lista-compra>vacio</lista-compra>
+    <tiendas>vacio</tiendas>
+<body>
+
+</body>
+
+</root>
