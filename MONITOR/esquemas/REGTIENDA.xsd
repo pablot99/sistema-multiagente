@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo10">
+
+<xs:element name="root">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="head" type="head"/>
+            <xs:element name="body" type="body"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="head">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tipo" type="xs:string" fixed="REGTIENDA" />
+            <xs:element name="emisor" type="xs:string" fixed="monitor"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="body">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="idTienda" type="xs:integer" />
+            <xs:element name="nombreTienda" type="xs:string" />
+            <xs:element name="stock" type="stock"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="stock">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="producto" type="producto" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="producto">
+    <xs:sequence>
+        <xs:element name="nombre" type="xs:string" />
+        <xs:element name="cantidad" type="xs:integer" />
+        <xs:element name="precio" type="xs:decimal" />
+    </xs:sequence>
+</xs:element>
+
+</xs:schema>

@@ -1,0 +1,2 @@
+REGTIENDA -> Creación de una tienda
+REGCLIENTE -> Creación de un cliente

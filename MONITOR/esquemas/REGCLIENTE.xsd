@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo10">
+
+<xs:element name="root">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="head" type="head"/>
+            <xs:element name="body" type="body"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="head">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tipo" type="xs:string" fixed="REGCLIENTE"/>
+            <xs:element name="emisor" type="xs:string" fixed="monitor"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="body">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="idCliente" type="xs:integer"/>
+            <xs:element name="nombreCliente" type="xs:string"/>
+            <xs:element name="lista-compra" type="lista-compra"/>
+            <xs:element name="tiendas" type="tiendas"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="lista-compra">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="producto" type="producto" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="producto">
+    <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="cantidad" type="xs:integer"/>
+    </xs:sequence>
+</xs:element>
+
+<xs:element name="tiendas">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tienda" type="tienda" maxOccurs="2"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="tienda">
+    <xs:sequence>
+        <xs:element name="idTienda" type="xs:integer" />
+        <xs:element name="ipTienda" type="tipoIP" />
+        <xs:element name="puertoTienda" type="xs:integer" />
+    </xs:sequence>
+</xs:element>
+
+<xs:simpleType name="tipoIP">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="((0|[1-9][0-9]?|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){​​​​3}​​​​(0|[1-9][0-9]?|1[0-9][0-9]|2[0-4][0-9]|25[0-5])"/>
+    </xs:restriction>
+</xs:simpleType>
+
+</xs:schema>
