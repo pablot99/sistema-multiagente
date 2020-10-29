@@ -13,6 +13,12 @@
 		<time>
 			00:00:00
 		</time>
+		<IP>
+			192.168.1.4
+		</IP>
+		<puerto>
+			1234
+		</puerto>
 	</head>
 	<body>
 		<lista_productos>
