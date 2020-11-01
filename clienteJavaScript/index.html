@@ -1,0 +1,125 @@
+<!-- Autores
+    Nikola Dyulgerov
+    Ramón Jesús Martínez
+    Cristian Petrov -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- JQuery CDN para la funcionalidad -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JavaScript scripts para la funcionalidad y actualización de contenido -->
+    <script type="text/javascript" src="Comprador.js"></script>
+    <script type="text/javascript" src="EnvíoMensajes.js"></script>
+    <script type="text/javascript" src="RecepcionMensajes.js"></script>
+    <script type="text/javascript" src="Interfaz.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="jumbotron jumbotron-fluid bg-dark text-light">
+            <div class="container text-center align-self-start">
+                <h1 class="display-4 ">Panel de Compradores</h1>
+                <p class="lead"></p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="monitor" class="container align-start-center">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Inicio</h5>
+                            <form class="form-signin">
+                                <div class="form-label-group mx-2 my-3">
+                                    <label for="inputIpMonitor">IP Monitor</label>
+                                    <input type="string" id="inputIpMonitor" class="form-control" placeholder="IP Monitor"
+                                        required autofocus>
+                                </div>
+                                <button id="enviar" class="btn btn-lg btn-primary btn-block text-camelcase">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="panel" class="container align-start-center">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="cliente1-tab" data-toggle="tab"  role="tab" href="#comprador1" aria-controls="comprador1" aria-selected="true">Comprador 1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="cliente2-tab" data-toggle="tab"  role="tab" href="#comprador2" aria-controls="comprador2" aria-selected="false">Comprador 2</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="cliente3-tab" data-toggle="tab" role="tab" href="#comprador3" aria-controls="comprador3" aria-selected="false">Comprador 3</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="comprador1" role="tabpanel" aria-labelledby="cliente1-tab">
+                    <div class="container">
+                        <div class="col-xl-12 col-lg-10 col-md-10 col-12">
+                            <div class="card-body">
+                              <h2 class="card-title text-left mt-2 mb-4">ID</h2>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Lista Compra</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  [Tomates: {3}, Pepinos:{2}]
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Precio Total</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  $ 156
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Tiempo Invertido</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  1 h y 20 min
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">Log</span>
+                                </div>
+                                <textarea class="form-control" aria-label="With textarea" disabled></textarea>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="tab-pane fade" id="comprador2" role="tabpanel" aria-labelledby="cliente2-tab">...</div>
+                <div class="tab-pane fade" id="comprador3" role="tabpanel" aria-labelledby="cliente3-tab">...</div>
+              </div>
+        </div>
+
+    </main>
+    <!-- Bootstrap para interfaz de usuario -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
