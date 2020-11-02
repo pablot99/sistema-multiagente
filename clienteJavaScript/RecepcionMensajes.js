@@ -7,6 +7,7 @@
      - Daniel García Carretero
 */
 
+// Procesas los mensajes llegados como respuesta
 function leerXML(mensaje){
     var contenido, xml, parser;
 
@@ -15,6 +16,18 @@ function leerXML(mensaje){
 
     // xml = mensaje.responseXML;
 
+    /*
+        Se tragará cualquier mensaje con la estructura:
+         - head
+           - tipo
+           - idCliente
+           - idTienda
+           - ip
+           - puerto
+         - body
+           - productos (no obligatorio)
+           - tiendas (no obligatorio)
+    */
     contenido = {
         head: {
             tipo: xml.getElementsByTagName('tipo')[0].childNodes[0].nodeValue,
@@ -24,26 +37,27 @@ function leerXML(mensaje){
             puerto: xml.getElementsByTagName('puerto')[0].childNodes[0].nodeValue
         },
         body:{
-            productos: getProductos(xml),
-            tiendas: getTiendas(xml)
+            productos: [],
+            tiendas: []
         }
     };
 
-    // // Productos
-    // try {
-    //     contenido["body"]['productos'] = getProductos(xml);
-    // } catch (error) {}
+    // Productos
+    try {
+        contenido["body"]['productos'] = getProductos(xml);
+    } catch (error) {}
     
 
-    // // Tiendas
-    // try {
-    //     contenido["body"]['tiendas'] = getTiendas(xml);
-    // } catch (error) {}
+    // Tiendas
+    try {
+        contenido["body"]['tiendas'] = getTiendas(xml);
+    } catch (error) {}
     
 
     return contenido;
 }
 
+// Procesa los productos
 function getProductos(xml){
     var lista = [];
     var productos = xml.getElementsByTagName('lista_productos')[0].childNodes;
@@ -60,6 +74,7 @@ function getProductos(xml){
     return lista;
 }
 
+// Procesa las tiendas
 function getTiendas(xml){
     var lista = [];
     var tiendas = xml.getElementsByTagName('lista-tiendas')[0].childNodes;
@@ -91,3 +106,24 @@ function leerMonitor(){
 
     return contenido;
 }
+
+
+/*
+    Ejemplo del return tras procesar el mensaje
+    repuesta = {
+        head:{
+            tipo: 'entrada_tienda',
+            idCliente: 3,
+            idTienda: 10,
+            ip: '198.161.1.1',
+            puerto: '80'
+        },
+        body:{
+            productos: [
+                {id: 5, cantidad: 45},
+                {id: 13, cantidad: 100}
+            ],
+            tiendas: []
+        }
+    }
+*/
