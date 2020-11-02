@@ -1,3 +1,12 @@
+/*
+    Autores:
+     - Carlos Morote García
+     - Sara López Matilla
+     - David Lorenzo Alfaro
+     - Mª Elena Pretel Fernández
+     - Daniel García Carretero
+*/
+
 // Genera la cabezara de un mensaje XML para enviar
 function escribirCabecera(infoMensaje){
     

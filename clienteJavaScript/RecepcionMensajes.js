@@ -1,4 +1,11 @@
-
+/*
+    Autores:
+     - Carlos Morote García
+     - Sara López Matilla
+     - David Lorenzo Alfaro
+     - Mª Elena Pretel Fernández
+     - Daniel García Carretero
+*/
 
 function leerXML(mensaje){
     var contenido, xml, parser;
@@ -18,20 +25,20 @@ function leerXML(mensaje){
         },
         body:{
             productos: getProductos(xml),
-            tiendas: []
+            tiendas: getTiendas(xml)
         }
     };
 
-    // Productos
-    try {
-        contenido["body"]['productos'] = getProductos(xml);
-    } catch (error) {}
+    // // Productos
+    // try {
+    //     contenido["body"]['productos'] = getProductos(xml);
+    // } catch (error) {}
     
 
-    // Tiendas
-    try {
-        contenido["body"]['tiendas'] = getTiendas(xml);
-    } catch (error) {}
+    // // Tiendas
+    // try {
+    //     contenido["body"]['tiendas'] = getTiendas(xml);
+    // } catch (error) {}
     
 
     return contenido;
@@ -70,7 +77,7 @@ function getTiendas(xml){
     return lista;
 }
 
-// TODO: Recepcion de los especialitos del Monitor
+// TODO: Esperar a como son finalmente los mensajes del Monitor
 function leerMonitor(){
     var contenido, xml, parser;
 
