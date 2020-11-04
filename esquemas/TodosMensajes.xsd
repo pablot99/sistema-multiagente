@@ -48,11 +48,23 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="tipoBody">
+    <!-- <xs:complexType name="tipoBody">
         <xs:sequence>
             <xs:element name="lista_productos" type="tipoListaProductos"/>
             <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
         </xs:sequence>
+    </xs:complexType> -->
+
+    <xs:complexType name="tipoBody" abstract="true"/>
+
+    <xs:complexType name="entrada_tienda">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="tipoHead">
