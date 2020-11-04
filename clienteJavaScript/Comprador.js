@@ -61,6 +61,38 @@ class Comprador {
 		}
 		return false;		
 	}
+	
+	//Agrega de la lista de tiendas pasada, las tiendas que no conozca el cliente
+	agregarTiendas(tiendas){
+        // Suponemos que la lista tiendas que nos pasan no tiene duplicados
+        var tiendaActual = {};
 
+		//Tiendas por añadir
+		var tiendasNuevas = [];
+
+		//Saca las tiendas
+		for(var i = 0;i < tiendas.length; i++){
+			tiendaActual = tiendas[i];
+
+            var isNueva = true;
+            //Comprueba si la tienda está en las listas conocidas
+            for (var tiendaConocida in this.listaTiendas){
+                
+                if(tiendaActual == tiendaConocida){
+                    isNueva = false;
+                }
+            }
+	
+			//Si la tienda es nueva, se introduce a la lista de tienda y a la lista de tiendas nuevas
+			if(isNueva){
+				this.listaTiendas.push(tiendaActual);
+				tiendasNuevas.push(tiendaActual);
+			}
+		}
+
+		//Mensaje de log correspondiente
+		console.log(tiendasNuevas)
+
+	}
     
   }
