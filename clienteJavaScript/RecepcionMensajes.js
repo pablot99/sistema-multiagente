@@ -28,6 +28,7 @@ function leerXML(mensaje){
            - productos (no obligatorio)
            - tiendas (no obligatorio)
     */
+    // TODO: Si hay un campo vacio que pasa
     contenido = {
         head: {
             tipo: xml.getElementsByTagName('tipo')[0].childNodes[0].nodeValue,

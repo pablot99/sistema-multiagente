@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="head" type="tipoHead"/>
+                <xs:element name="body" type="tipoBody"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="tipoHead">
+        <xs:complexType>
+            <xs:element name="tipo" type="tipoMensaje"/>
+            <xs:element name="id_cliente" type="xs:integer"/>
+            <xs:element name="ip_cliente" type="tipoIP"/>
+            <xs:element name="id_tienda" type="xs:integer"/>
+            <xs:element name="ip_tienda" type="tipoIP"/>
+            <xs:element name="puerto" type="xs:integer"/>
+            <xs:element name="time_sent" type="xs:time"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- TODO -->
+    <xs:element name="tipoBody"/>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="lista_productos" type="tipoListaProductos"/>
+                <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="tipoIP">
+        <xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <!-- TODO -->
+    <xs:simpleType name="tipoMensaje">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="entrada_tienda"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="tipoListaProductos">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="producto" type="tipoProducto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="tipoProducto">
+        <xs:sequence>
+            <xs:element name="id_producto" type="xs:integer"/>
+            <xs:element name="cantidad" type="xs:integer"/>
+        </xs:sequence>
+    </xs:element>
+
+    <xs:element name="tipoListaTiendas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="tienda" type="tipoProducto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="tipoTienda">
+        <xs:sequence>
+            <xs:element name="id_tienda" type="xs:integer"/>
+            <xs:element name="ip_tienda" type="tipoIP"/>
+			<xs:element name="puerto" type="xs:int"/>
+        </xs:sequence>
+    </xs:element>
+
+</xs:schema>
