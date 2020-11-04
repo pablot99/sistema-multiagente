@@ -14,7 +14,11 @@
     <xs:complexType>
         <xs:sequence>
             <xs:element name="tipo" type="xs:string" fixed="REGCLIENTE"/>
-            <xs:element name="emisor" type="xs:string" fixed="monitor"/>
+            <xs:element name="idcliente" type="xs:integer"/> 
+            <xs:element name="idtienda" type="xs:integer"/> 
+            <xs:element name="purtoTienda" type="xs:integer"/> 
+            <xs:element name="ipEmison" type="tipoIP"/> 
+            <xs:element name="ipReceptor" type="tipoIP"/>
         </xs:sequence>
     </xs:complexType>
 </xs:element>
@@ -23,7 +27,6 @@
     <xs:complexType>
         <xs:sequence>
             <xs:element name="idCliente" type="xs:integer"/>
-            <xs:element name="nombreCliente" type="xs:string"/>
             <xs:element name="lista-compra" type="lista-compra"/>
             <xs:element name="tiendas" type="tiendas"/>
         </xs:sequence>
@@ -40,7 +43,7 @@
 
 <xs:element name="producto">
     <xs:sequence>
-        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="id_producto" type="xs:integer"/>
         <xs:element name="cantidad" type="xs:integer"/>
     </xs:sequence>
 </xs:element>

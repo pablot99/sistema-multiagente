@@ -14,7 +14,11 @@
     <xs:complexType>
         <xs:sequence>
             <xs:element name="tipo" type="xs:string" fixed="REGTIENDA" />
-            <xs:element name="emisor" type="xs:string" fixed="monitor"/>
+            <xs:element name="idcliente" type="xs:integer"/> 
+            <xs:element name="idtienda" type="xs:integer"/> 
+            <xs:element name="purtoTienda" type="xs:integer"/> 
+            <xs:element name="ipEmison" type="tipoIP"/> 
+            <xs:element name="ipReceptor" type="tipoIP"/>
         </xs:sequence>
     </xs:complexType>
 </xs:element>
