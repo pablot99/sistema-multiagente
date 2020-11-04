@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root xmlns="es.uclm.grupo4">
+<head>
+<idShop></idShop>
+<idClient></idClient>
+</head>
+<body> 
+<message>Se ha realizado la compra</message>
+<lista_productos>
+			<producto>
+				<id_producto>
+					p1
+				</id_producto>
+				<cantidad>
+					3
+				</cantidad>
+			</producto>
+</lista_productos>			
+</body>
+</root>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo6">
+
+<xs:element name="root">
+  <xs:complexType>
+    <xs:sequence>
+	
+		<xs:element name="head">
+			<xs:complexType>
+				<xs:sequence>	
+					<xs:element name="tipo" type="xs:string"/>
+					<xs:element name="id_cliente" type="xs:string"/>
+					<xs:element name="id_tienda" type="xs:string"/>
+					<xs:element name="time" type="xs:time"/>
+					<xs:element name="IP" type="xs:string"/>
+					<xs:element name="puerto" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		
+		<xs:element name="body">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="lista_productos">  
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="producto">  
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="id_producto" type="xs:string"/>  
+											<xs:element name="cantidad" type="xs:integer"/>
+										</xs:sequence>
+									</xs:complexType> 		
+							</xs:sequence>
+						</xs:complexType> 
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

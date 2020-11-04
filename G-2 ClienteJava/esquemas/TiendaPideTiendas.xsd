@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo2">
+
+<xs:element name="root">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="head" type="head"/>
+            <xs:element name="body" type="body"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="head">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tipo" type="xs:string"/>
+            <xs:element name="idTienda" type="xs:integer"/>
+			<xs:element name="idCliente" type="xs:integer"/>
+			<xs:element name="time" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+
+<xs:element name="body">
+    <xs:complexType>
+        <xs:sequence>
+
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>

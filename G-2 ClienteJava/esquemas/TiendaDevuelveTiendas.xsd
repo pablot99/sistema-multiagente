@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo10">
+
+<xs:element name="root">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="head" type="head"/>
+            <xs:element name="body" type="body"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="head">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tipo" type="xs:string"/>
+            <xs:element name="idTienda" type="xs:integer"/>
+			<xs:element name="idCliente" type="xs:integer"/>
+			<xs:element name="time" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="body">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="lista-tiendas" type="xs:lista-tiendas"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="lista-tiendas">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tienda" type="tienda" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="tienda">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="idTienda" type="xs:integer" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>

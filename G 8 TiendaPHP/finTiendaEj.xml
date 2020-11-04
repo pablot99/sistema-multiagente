@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="FINTIENDA.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<root>
+    <head>
+        <tipo>FINTIENDA</tipo>
+        <emisor>monitor</emisor>
+        <time>12:00:00</time>
+    </head>
+    <body>
+
+    </body>
+</root>

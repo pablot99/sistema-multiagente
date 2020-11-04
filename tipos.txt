@@ -1,2 +1,3 @@
 REGTIENDA -> Creación de una tienda
 REGCLIENTE -> Creación de un cliente
+FINTIENDA -> Finalización de una tienda
