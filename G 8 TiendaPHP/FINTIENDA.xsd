@@ -8,6 +8,8 @@
                         <xs:sequence>
                             <xs:element name="tipo" type="xs:string" fixed="FINTIENDA" />
                             <xs:element name="emisor" type="xs:string" fixed="monitor"/>
+                            <xs:element name="IP" type="xs:string" /> 
+                            <xs:element name="puerto" type="xs:int"/>
                             <xs:element name="time" type="xs:time"/> 
                         </xs:sequence>
                     </xs:complexType>
