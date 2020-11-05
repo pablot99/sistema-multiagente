@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<head>
-		<tipo>prueba_recepcion</tipo>
-		<id_cliente>1</id_cliente>
-		<ip_cliente>192.168.1.4</ip_cliente>
-		<id_tienda>1</id_tienda>
-		<ip_tienda>192.168.1.4</ip_tienda>
-		<puerto>1234</puerto>
+		<tipo_mensaje>prueba_recepcion</tipo_mensaje>
+
+		<tipo_emisor>tienda</tipo_emisor>
+		<id_emisor>1</id_emisor>
+		<ip_emisor>192.168.1.4</ip_emisor>
+		<puerto_emisor>1234</puerto_emisor>
+
+		<tipo_receptor>comprador</tipo_receptor>
+		<id_receptor>3</id_receptor>
+		<ip_receptor>192.168.1.4</ip_receptor>
+		<puerto_receptor>-1</puerto_receptor>
+
 		<time_sent>00:00:00</time_sent>
 	</head>
 	<body xsi:type="prueba_recepcion">

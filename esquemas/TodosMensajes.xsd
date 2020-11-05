@@ -22,6 +22,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- Tipo de Agentes -->
+    <xs:simpleType name="tipoAgente">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="monitor"/>
+            <xs:enumeration value="comprador"/>
+            <xs:enumeration value="tienda"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Expresion regular IP -->
     <xs:simpleType name="tipoIP">
         <xs:restriction base="xs:string">
@@ -189,12 +198,18 @@
      - xs:time -> 00:00:00 -->
     <xs:complexType name="tipoHead">
         <xs:sequence>
-            <xs:element name="tipo" type="tipoMensaje"/>
-            <xs:element name="id_cliente" type="xs:integer"/>
-            <xs:element name="ip_cliente" type="tipoIP"/>
-            <xs:element name="id_tienda" type="xs:integer"/>
-            <xs:element name="ip_tienda" type="tipoIP"/>
-            <xs:element name="puerto" type="xs:integer"/>
+            <xs:element name="tipo_mensaje" type="tipoMensaje"/>
+
+            <xs:element name="tipo_emisor" type="tipoAgente"/>
+            <xs:element name="id_emisor" type="xs:integer"/>
+            <xs:element name="ip_emisor" type="tipoIP"/>
+            <xs:element name="puerto_emisor" type="xs:integer"/>
+
+            <xs:element name="tipo_receptor" type="tipoAgente"/>
+            <xs:element name="id_receptor" type="xs:integer"/>
+            <xs:element name="ip_receptor" type="tipoIP"/>
+            <xs:element name="puerto_receptor" type="xs:integer"/>
+
             <xs:element name="time_sent" type="xs:time"/>
         </xs:sequence>
     </xs:complexType>
