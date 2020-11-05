@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head>
+		<tipo>confirmacion_compra</tipo>
+		<id_cliente>1</id_cliente>
+		<ip_cliente>192.168.1.4</ip_cliente>
+		<id_tienda>1</id_tienda>
+		<ip_tienda>192.168.1.4</ip_tienda>
+		<puerto>1234</puerto>
+		<time_sent>00:00:00</time_sent>
+	</head>
+	<body xsi:type="confirmacion_compra">
+		<lista_productos>
+			<producto>
+				<id_producto>1</id_producto>
+				<cantidad>3</cantidad>
+			</producto>
+			<producto>
+				<id_producto>2</id_producto>
+				<cantidad>5</cantidad>
+			</producto>
+			<producto>
+				<id_producto>3</id_producto>
+				<cantidad>7</cantidad>
+			</producto>
+			<producto>
+				<id_producto>4</id_producto>
+				<cantidad>30</cantidad>
+			</producto>
+		</lista_productos>
+	</body>
+</root>

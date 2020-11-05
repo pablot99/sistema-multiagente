@@ -39,7 +39,7 @@
 
     <!-- Lsita de productos -->
     <xs:complexType name="tipoListaProductos">
-        <xs:sequence minOccurs="0">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:element name="producto" type="tipoProducto"/>
         </xs:sequence>
     </xs:complexType>
@@ -55,8 +55,8 @@
 
     <!-- Lista de tiendas -->
     <xs:complexType name="tipoListaTiendas">
-        <xs:sequence minOccurs="0">
-            <xs:element name="tienda" type="tipoProducto"/>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="tienda" type="tipoTienda"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -163,7 +163,9 @@
     <xs:complexType name="prueba_envio">
         <xs:complexContent>
             <xs:extension base="tipoBody">
-                <xs:element name="prueba" type="xs:string"/>
+                <xs:sequence>
+                    <xs:element name="prueba" type="xs:string"/>
+                </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -173,7 +175,9 @@
     <xs:complexType name="prueba_recepcion">
         <xs:complexContent>
             <xs:extension base="tipoBody">
-                <xs:element name="prueba" type="xs:string"/>
+                <xs:sequence>
+                    <xs:element name="prueba" type="xs:string"/>
+                </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head>
+		<tipo>respuesta_tiendas_conocidas</tipo>
+		<id_cliente>1</id_cliente>
+		<ip_cliente>192.168.1.4</ip_cliente>
+		<id_tienda>1</id_tienda>
+		<ip_tienda>192.168.1.4</ip_tienda>
+		<puerto>1234</puerto>
+		<time_sent>00:00:00</time_sent>
+	</head>
+	<body xsi:type="respuesta_tiendas_conocidas">
+		<lista_tiendas>
+            <tienda>
+                <id_tienda>12</id_tienda>
+                <ip_tienda>192.168.1.6</ip_tienda>
+                <puerto>8000</puerto>
+            </tienda>
+            <tienda>
+                <id_tienda>13</id_tienda>
+                <ip_tienda>192.168.1.12</ip_tienda>
+                <puerto>8000</puerto>
+            </tienda>
+            <tienda>
+                <id_tienda>14</id_tienda>
+                <ip_tienda>192.168.1.20</ip_tienda>
+                <puerto>8000</puerto>
+            </tienda>
+        </lista_tiendas>
+	</body>
+</root>

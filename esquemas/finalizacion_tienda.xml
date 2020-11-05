@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head>
+		<tipo>finalizacion_tienda</tipo>
+		<id_cliente>-1</id_cliente>
+		<ip_cliente>0.0.0.0</ip_cliente>
+		<id_tienda>1</id_tienda>
+		<ip_tienda>192.168.1.4</ip_tienda>
+		<puerto>1234</puerto>
+		<time_sent>00:00:00</time_sent>
+	</head>
+	<body xsi:type="finalizacion_tienda"></body> <!-- IMPORTANTE <body></body> esten en la misma linea -->
+</root>

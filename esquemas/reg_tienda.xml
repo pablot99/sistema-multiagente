@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head>
+		<tipo>reg_tienda</tipo>
+		<id_cliente>-1</id_cliente> 
+		<ip_cliente>0.0.0.0</ip_cliente>
+		<id_tienda>7</id_tienda> <!-- La genera el monitor -->
+		<ip_tienda>192.168.1.4</ip_tienda>
+		<puerto>8000</puerto>
+		<time_sent>14:25:36</time_sent>
+	</head>
+	<body xsi:type="reg_tienda">
+        <nombre_tienda>Mercadona</nombre_tienda>
+		<lista_productos>
+			<producto>
+				<id_producto>1</id_producto>
+				<cantidad>3000</cantidad>
+			</producto>
+            <producto>
+				<id_producto>3</id_producto>
+				<cantidad>5000</cantidad>
+			</producto>
+            <producto>
+				<id_producto>7</id_producto>
+				<cantidad>1000</cantidad>
+			</producto>
+		</lista_productos>
+	</body>
+</root>
