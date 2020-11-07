@@ -146,32 +146,35 @@ function escribir_tiendas(infoMensaje){
 
 
 //Funcion JQuery ajax para mandar mensajes y recibir respuesta
-function enviarXML(direccion, infoMensaje, asincrono){
+function enviarXML(infoMensaje){
     var respuesta;
+    var mensaje = crearMensaje(infoMensaje)
 
     $.ajax({
-        url: 'http://' + direccion.replace("http://", "").replace(/\/\//g,"/"),
-        data: crearMensaje(infoMensaje),
+        url: 'http://' + infoMensaje.ip_receptor + ":"+infoMensaje.puerto_receptor,
+        data: mensaje,
         type: 'POST',
-        async: asincrono,
+        async: flase,
         dataType: 'text',
         contentType: 'text/xml',
 
         beforeSend: function(request){
             //TODO: Actualizar html
-            console.log("Envio mensaje a: "+direccion);
+            // console.log("Envio mensaje a: "+infoMensaje.ip_receptor);
+            console.log(mensaje)
         },
 
         // Recepcion del mensaje
         success: function(response){
-            console.log("Mensaje recibido de: "+direccion);
+            console.log("Mensaje recibido de: "+infoMensaje.ip_receptor);
+            console.log(response)
             respuesta = leerXML(response);
-            console.log("Mensaje recibido de "+direccion+" procesado");
+            console.log("Mensaje recibido de "+infoMensaje.ip_receptor+" procesado");
         },
 
         // En caso de error
         error: function(response){
-            console.log("Error enviando a "+ direccion +": "+response);
+            console.log("Error enviando a "+ infoMensaje.ip_receptor +": "+response);
             //TODO: Actualizar html con error
         }
     });
@@ -193,6 +196,29 @@ function get_IP() {
 		}
     });
     return ipCliente;
+}
+
+function get_Monitor(ip_monitor, ip_cliente){
+    // https://www.w3schools.com/jquery/ajax_get.asp
+    var respuesta;
+    $.ajax({
+        url: 'http://' + ip_monitor + ":8000",
+        data: ip_cliente,
+        type: "POST",
+        async: false,
+        datatype: "text",
+        contentType: "text",
+
+        success: function(data){
+            console.log("Conexion realizada con el Monitor");
+            respuesta = leerXML(data);
+        },
+
+        error: function(response) {
+            console.log("No se pudo conectar con el Monitor");
+        }
+    });
+    return respuesta;
 }
 
 // https://es.stackoverflow.com/questions/360331/url-en-ajax-jquery-3-5-1
