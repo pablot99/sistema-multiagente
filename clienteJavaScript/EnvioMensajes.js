@@ -55,15 +55,19 @@ function escribirCuerpo(infoMensaje){
 
     switch (infoMensaje.tipo_mensaje){
         case 'entrada_tienda':
-            mensaje += entrada_tienda(infoMensaje);
+            mensaje += escribir_productos(infoMensaje);
             break;
 
-        case 'Pide_Tiendas':
-            mensaje += pedir_tiendas(infoMensaje);
+        case 'solicitar_tiendas':
+            mensaje += escribir_tiendas(infoMensaje);
+            break;
+
+        case 'finalizacion_cliente':
+            mensaje += escribir_productos(infoMensaje);
             break;
 
         default:
-            alert('Error: ' + infoMensaje.tipo);
+            console.log('Error: ' + infoMensaje.tipo_mensaje);
             break;
     }
 
@@ -105,7 +109,7 @@ function addZero(i) {
 }
 
 // Genera cuerpo para el mensaje de entrar a tiendas
-function entrada_tienda(infoMensaje){
+function escribir_productos(infoMensaje){
     var mensajes = "<lista_productos>";
     for(let i=0; i<infoMensaje.productos.length; i++){
         mensajes += "<producto>" +
@@ -122,22 +126,22 @@ function entrada_tienda(infoMensaje){
 }
 
 // Genera cuerpo para el mensaje para pedir tiendas TODO
-function pedir_tiendas(infoMensaje){
+function escribir_tiendas(infoMensaje){
     var mensajes = "<lista_tiendas>";
-    for(let i=0; i<infoMensaje.tienda.length; i++){
+    for(let i=0; i<infoMensaje.tiendas.length; i++){
         mensajes += "<tienda>" +
                         "<id_tienda>" +
-                            infoMensaje.tienda[i].id +
+                            infoMensaje.tiendas[i].id +
                         "</id_tienda>"+
                         "<ip_tienda>" +
-                            infoMensaje.tienda[i].id +
+                            infoMensaje.tiendas[i].id +
                         "</ip_tienda>"+
                         "<puerto>"+
-                            infoMensaje.tienda[i].puerto +
+                            infoMensaje.tiendas[i].puerto +
                         "</puerto>"+
-                    "</producto>";
+                    "</tienda>";
     }
-    return mensajes +="</lista_productos>";
+    return mensajes +="</lista_tiendas>";
 }
 
 
@@ -207,5 +211,9 @@ function get_IP() {
 //     productos: [
 //         {id: 5, cantidad: 45},
 //         {id: 13, cantidad: 100}
+//     ],
+//     tiendas: [
+//         {id:4, ip: "192.168.1.3", puerto: "8000"},
+//         {id:4, ip: "192.168.1.3", puerto: "8000"}
 //     ]
 // }
