@@ -1,5 +1,6 @@
 /*  Poned los grupos que modifican este archivo*/
 /*  Este es un constructor que hicimos, añadid los métodos para manejar los datos y atributos que creais convenientes*/
+
 class Comprador {
   constructor(ip, puerto, ipMonitor, puertoMonitor) {
     this.ip = ip;
@@ -13,3 +14,4 @@ class Comprador {
     this.tiempoConsumido = 0;
   }
 }
+
