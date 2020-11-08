@@ -1,0 +1,226 @@
+<!-- Autor: Carlos Morote García -->
+
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- TODO: Revisar -->
+    <!-- Todos los tipos de mensajes -->
+    <xs:simpleType name="tipoMensaje">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="reg_cliente"/>
+            <xs:enumeration value="reg_tienda"/>
+            <xs:enumeration value="entrada_tienda"/>
+            <xs:enumeration value="confirmacion_compra"/>
+            <xs:enumeration value="solicitar_tiendas"/>
+            <xs:enumeration value="respuesta_tiendas_conocidas"/>
+            <xs:enumeration value="finalizacion_cliente"/>
+            <xs:enumeration value="finalizacion_tienda"/>
+
+            <!-- Tipos destinados a testeas -->
+            <xs:enumeration value="prueba_envio"/>
+            <xs:enumeration value="prueba_recepcion"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Tipo de Agentes -->
+    <xs:simpleType name="tipoAgente">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="monitor"/>
+            <xs:enumeration value="comprador"/>
+            <xs:enumeration value="tienda"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Expresion regular IP -->
+    <xs:simpleType name="tipoIP">
+        <xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <!-- Producto -->
+    <xs:complexType name="tipoProducto">
+        <xs:sequence>
+            <xs:element name="id_producto" type="xs:integer"/>
+            <xs:element name="cantidad" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Lsita de productos -->
+    <xs:complexType name="tipoListaProductos">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="producto" type="tipoProducto"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tienda -->
+    <xs:complexType name="tipoTienda">
+        <xs:sequence>
+            <xs:element name="id_tienda" type="xs:integer"/>
+            <xs:element name="ip_tienda" type="tipoIP"/>
+			<xs:element name="puerto" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Lista de tiendas -->
+    <xs:complexType name="tipoListaTiendas">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="tienda" type="tipoTienda"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Cuerpo abstracto -->
+    <xs:complexType name="tipoBody" abstract="true"/>
+
+    <!-- Mensaje de respuesta al cliente por parte del monitor.
+    Contiene la lista de la compra "lista_productos" y 
+    la lista de tiendas conocidas "lista_tiendas" -->
+    <xs:complexType name="reg_cliente">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                    <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje de respuesta a la tienda por parte del monitor.
+    Contiene la lista de productos que tiene la tienda para vender "lista_productos" -->
+    <xs:complexType name="reg_tienda">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="nombre_tienda" type="xs:string"/>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje para entrar a la tienda. Envia lista compra -->
+    <xs:complexType name="entrada_tienda">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje respuesta por parte de la tienda al cliente. 
+    Contiene la lista de productos comprados "lista_productos" -->
+    <xs:complexType name="confirmacion_compra">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje del cliente para solicitar tiendas a la tienda.
+    Contiene las tiendas que el cliente conoce "lista_tiendas" -->
+    <xs:complexType name="solicitar_tiendas">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje respuesta por parte de la tienda al cliente.
+    Contiene las tiendas que la tienda conoce "lista_tiendas". -->
+    <xs:complexType name="respuesta_tiendas_conocidas">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje del cliente hacia el monitor indicando su finalizacion.
+    Contendra los productos que le faltaban por comprar (vacio si compro todo) "lista_productos" -->
+    <xs:complexType name="finalizacion_cliente">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="lista_productos" type="tipoListaProductos"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje de la tienda hacia el monitor indicando su finalizacion.
+    Contendrá nada. La tienda solo finalizara cuando no le queden productos. -->
+    <xs:complexType name="finalizacion_tienda">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje para comprobar el correcto funcinamiento de los envios
+    Contiene un string que contendrá lo que sea -->
+    <xs:complexType name="prueba_envio">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="prueba" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje para comprobar el correcto funcinamiento de las recepciones
+    Contiene un string que contendrá lo que sea -->
+    <xs:complexType name="prueba_recepcion">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+                <xs:sequence>
+                    <xs:element name="prueba" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Head no admite etiquetas vacias. Sin embargo, si un elemento no se puede enviar 
+    porque no se disponga del mismo rellenar de la siguiente forma:
+     - xs:integer -> -1
+     - tipoIP -> 0.0.0.0
+     - xs:time -> 00:00:00 -->
+    <xs:complexType name="tipoHead">
+        <xs:sequence>
+            <xs:element name="tipo_mensaje" type="tipoMensaje"/>
+
+            <xs:element name="tipo_emisor" type="tipoAgente"/>
+            <xs:element name="id_emisor" type="xs:integer"/>
+            <xs:element name="ip_emisor" type="tipoIP"/>
+            <xs:element name="puerto_emisor" type="xs:integer"/>
+
+            <xs:element name="tipo_receptor" type="tipoAgente"/>
+            <xs:element name="id_receptor" type="xs:integer"/>
+            <xs:element name="ip_receptor" type="tipoIP"/>
+            <xs:element name="puerto_receptor" type="xs:integer"/>
+
+            <xs:element name="time_sent" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="head" type="tipoHead"/>
+                <xs:element name="body" type="tipoBody"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

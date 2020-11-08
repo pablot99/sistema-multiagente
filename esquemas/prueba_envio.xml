@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head>
+		<tipo_mensaje>prueba_envio</tipo_mensaje>
+
+		<tipo_emisor>comprador</tipo_emisor>
+		<id_emisor>1</id_emisor>
+		<ip_emisor>192.168.1.4</ip_emisor>
+		<puerto_emisor>-1</puerto_emisor>
+
+		<tipo_receptor>tienda</tipo_receptor>
+		<id_receptor>3</id_receptor>
+		<ip_receptor>192.168.1.4</ip_receptor>
+		<puerto_receptor>1234</puerto_receptor>
+
+		<time_sent>00:00:00</time_sent>
+	</head>
+	<body xsi:type="prueba_envio">
+		<prueba>Hola tienda!</prueba>
+	</body>
+</root>

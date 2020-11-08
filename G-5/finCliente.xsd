@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="es.uclm.grupo5">
+
+<xs:element name="finCliente">
+	<xs:complexType>
+		<xs:all>
+            <xs:element name="head">
+                <xs:complexType>
+					<xs:all>
+						<xs:element name="tipo" type="xs:string"/>
+			            <xs:element name="idCliente" type="xs:string"/>
+			            <xs:element name="time" type="xs:time">
+					</xs:all>
+				</xs:complexType>
+            </xs:element>
+
+            <xs:element name="body"/>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="lista-compra"/>
+							<xs:complexType>
+								<xs:element name="nombre" type="xs:string"/>
+								<xs:element name="cantidad" type="xs:integer"/>
+							<xs:complexType>
+						<xs:element name="tiendas" type="tiendas"/>
+							<xs:complexType>
+								<xs:element name="idTienda" type="xs:string"/>
+							<xs:complexType>						
+					</xs:sequence>
+				</xs:complexType>
+		</xs:all>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>
