@@ -154,7 +154,7 @@ function enviarXML(infoMensaje){
         url: 'http://' + infoMensaje.ip_receptor + ":"+infoMensaje.puerto_receptor,
         data: mensaje,
         type: 'POST',
-        async: flase,
+        async: false,
         dataType: 'text',
         contentType: 'text/xml',
 
