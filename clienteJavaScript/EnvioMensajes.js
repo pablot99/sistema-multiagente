@@ -175,6 +175,8 @@ function enviarXML(infoMensaje){
         // En caso de error
         error: function(response){
             console.log("Error enviando a "+ infoMensaje.ip_receptor +": "+response);
+
+            respuesta = -1;
             //TODO: Actualizar html con error
         }
     });
@@ -216,6 +218,7 @@ function get_Monitor(ip_monitor, ip_cliente){
 
         error: function(response) {
             console.log("No se pudo conectar con el Monitor");
+            repuesta = -1;
         }
     });
     return respuesta;
