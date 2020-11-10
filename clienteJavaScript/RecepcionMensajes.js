@@ -8,11 +8,11 @@
 */
 
 // Procesas los mensajes llegados como respuesta
-function leerXML(mensaje){
-    var contenido, xml, parser;
+function leerXML(xml){
+    var contenido, parser;
 
-    parser = new DOMParser();
-    xml = parser.parseFromString(mensaje, "text/xml");
+    // parser = new DOMParser();
+    // xml = parser.parseFromString(mensaje, "text/xml");
 
     // xml = mensaje.responseXML;
 

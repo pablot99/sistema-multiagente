@@ -200,19 +200,20 @@ function get_IP() {
     return ipCliente;
 }
 
-function get_Monitor(ip_monitor, ip_cliente){
+function get_Monitor(ip_monitor){
     // https://www.w3schools.com/jquery/ajax_get.asp
     var respuesta;
     $.ajax({
-        url: 'http://' + ip_monitor + ":8000",
-        data: ip_cliente,
-        type: "POST",
+        url: 'http://' + ip_monitor + ":3000?crearCliente",
+        // data: ip_cliente,
+        type: "GET",
         async: false,
         datatype: "text",
         contentType: "text",
 
         success: function(data){
             console.log("Conexion realizada con el Monitor");
+            console.log(data);
             respuesta = leerXML(data);
         },
 

@@ -101,7 +101,7 @@ class Comprador {
 	//Pide productos y tiendas
 	async pideIni() {
 		//CAMBIOS AQUI
-		var respuesta = await get_Monitor(this.ipMonitor, this.ip);
+		var respuesta = await get_Monitor(this.ipMonitor);
 		if(respuesta!=-1){
 			this.listaCompra = respuesta["body"]['lista_productos'];
 			this.listaTiendas = respuesta["body"]['lista_tiendas'];
