@@ -6,7 +6,7 @@
 
 //Lista de compradores 
 var compradores = [
-    {id:1, ip: "192.168.1.106", puerto: 80, ipMonitor: "192.168.1.110", puertoMonitor: 80, listaCompra: [{id_producto: 1, cantidad: 4}], listaTiendas: [{id_tienda: 2, ip_tienda: "192,168.1.5"}], dineroGastado: 0, tiempoConsumido: 0 },
+    {id:1, ip: "192.168.1.106", puerto: 80, ipMonitor: "192.168.1.110", puertoMonitor: 80, listaCompra: [{id_producto: 1, cantidad: 4},{id_producto: 2, cantidad: 1},{id_producto: 3, cantidad: 10}], listaTiendas: [{id_tienda: 2, ip_tienda: "192,168.1.5"}], dineroGastado: 0, tiempoConsumido: 0 },
     {id:2, ip: "192.168.1.106", puerto: 80, ipMonitor: "192.168.1.110", puertoMonitor: 80, listaCompra: [{id_producto: 3, cantidad: 3}], listaTiendas: [{id_tienda: 1, ip_tienda: "192,168.1.2"}], dineroGastado: 0, tiempoConsumido: 0 }
 ];
 
@@ -71,11 +71,11 @@ function crearTabCompradores() {
 
             //Ahora creamos la información a mostrar y la tarjeta que la almacenerá
             var $card = $('<div class="card-body"><h2 class="card-title text-left mt-2 mb-4">'+ c.id +'</h2><hr></div>');
-            var $listaCompra = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Lista Compra</h6></div> <div id="listaCompra" class="col-sm-9 text-secondary">' + JSON.stringify(c.listaCompra, null, 2)+'</div></div><hr>');
-            var $listaTiendas = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Lista Tiendas</h6></div> <div id="listaTiendas" class="col-sm-9 text-secondary">' +JSON.stringify(c.listaTiendas, null, 2) +'</div></div><hr>');
-            var $precioTotal = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Precio Total</h6></div> <div id="dineroGastado" class="col-sm-9 text-secondary">' + c.dineroGastado +'</div></div><hr>');
-            var $tiempo = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Tiempo Invertido</h6></div> <div id="tiempoConsumido" class="col-sm-9 text-secondary">' + c.tiempoConsumido +'</div></div><hr>');
-            var $log = $('<div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Log</span></div><textarea id="log" class="form-control" aria-label="With textarea" disabled></textarea></div>');
+            var $listaCompra = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Lista Compra</h6></div> <div id="listaCompra' + c.id + '" class="col-sm-9 text-secondary">' + creaTabla(c.listaCompra) +'</div></div><hr>');
+            var $listaTiendas = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Lista Tiendas</h6></div> <div id="listaTiendas' + c.id + '" class="col-sm-9 text-secondary">' + creaTabla(c.listaTiendas) +'</div></div><hr>');
+            var $precioTotal = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Precio Total</h6></div> <div id="dineroGastado' + c.id + '" class="col-sm-9 text-secondary">' + c.dineroGastado +'</div></div><hr>');
+            var $tiempo = $('<div class="row"><div class="col-sm-3"><h6 class="mb-0">Tiempo Invertido</h6></div> <div id="tiempoConsumido' + c.id + '" class="col-sm-9 text-secondary">' + c.tiempoConsumido +'</div></div><hr>');
+            var $log = $('<div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Log</span></div><textarea id="log' + c.id + '" class="form-control" aria-label="With textarea" disabled></textarea></div>');
 
             //Insertamos los contenido, respetando la jerarquía de elementos
             $card.append($listaCompra, $listaTiendas, $precioTotal, $tiempo, $log);
@@ -83,6 +83,35 @@ function crearTabCompradores() {
             contenido.append($panel);
         }
     );
+}
+
+// funcion que te genera una tabla con los elementos de una lista
+function creaTabla(lista){
+    if (lista.length == 0){
+        return "No hay elementos"
+    }
+    else{
+        var tabla = '<table class="table table-striped" style="table-layout: fixed;"><thead class="thead-dark"><tr>'
+        console.log(tabla)
+        elementos = Object.keys(lista[0])
+        console.log(elementos)
+        for (var i = 0; i < elementos.length; i++){
+            tabla += '<th scope="col">'+ elementos[i]+'</th>'
+        }
+        console.log(tabla)
+        tabla += '</tr></thead><tbody>'
+        for (var i = 0; i < lista.length; i++){
+            tabla += '<tr>'
+            elementos.forEach(function (item) {
+                tabla += '<td>' + lista[i][item] +'</td>'
+            });
+            tabla += '</tr>'
+        }
+        console.log(tabla)
+        tabla += '</tbody></table>'
+        return tabla
+    }
+
 }
 
 // Tiene que ser llamada por los compradores cada vez que realicen una accion
