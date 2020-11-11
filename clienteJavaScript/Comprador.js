@@ -111,16 +111,16 @@ class Comprador {
 		return respuesta;
 	}
 
-	async senalaEntrada() { 
+	async senalaEntrada(tiendaActual) { 
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
 			id_emisor: this.id,
 			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
-			id_receptor: this.listaTiendas[0].id_tienda,
-			ip_receptor: this.listaTiendas[0].ip_tienda,
-			puerto_receptor: this.listaTiendas[0].puerto_tienda,
+			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
+			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
+			puerto_receptor: this.listaTiendas[tiendaActual].puerto_tienda,
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
@@ -146,32 +146,32 @@ class Comprador {
 		requestUpdate(this.id);
 	}
 
-	async iniciaCompra() {
+	async iniciaCompra(tiendaActual) {
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
 			id_emisor: this.id,
 			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
-			id_receptor: this.listaTiendas[0].id_tienda,
-			ip_receptor: this.listaTiendas[0].ip_tienda,
-			puerto_receptor: this.listaTiendas[0].puerto_tienda,
+			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
+			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
+			puerto_receptor: this.listaTiendas[tiendaActual].puerto_tienda,
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
 		await EnvioMensajes.enviarXML(infoM)
 	}
 
-	async askForShops() { 
+	async askForShops(tiendaActual) { 
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'solicitar_tiendas',
 			id_emisor: this.id,
 			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
-			id_receptor: this.listaTiendas[0].id_tienda,
-			ip_receptor: this.listaTiendas[0].ip_tienda,
-			puerto_receptor: this.listaTiendas[0].puerto_tienda,
+			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
+			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
+			puerto_receptor: this.listaTiendas[tiendaActual].puerto_tienda,
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
@@ -199,7 +199,7 @@ class Comprador {
 			var tienda = this.listaTiendas[tiendaActual];
 
 			// Mensaje para indicar que ha entrado en la tienda
-			var res = await this.senalaEntrada();
+			var res = await this.senalaEntrada(tiendaActual);
 
 			// Si no hay ningun error al entrar en la tienda
 			if (res != -1) {
@@ -224,7 +224,7 @@ class Comprador {
 				//Añadimos al log y preguntamos
 				this.addToLog("El cliente " + this.id + " tiene productos restantes por comprar.");
 				// Espera a que un cliente le pase la lista de las tiendas
-				resultado = this.askForShops(shop);
+				resultado = this.askForShops(tiendaActual);
 				if (resultado != -1) {
 					var tiendas = resultado["body"]['lista_tiendas'];
 					//Añadimos las tiendas nuevas a las actuales
@@ -239,7 +239,7 @@ class Comprador {
 			}
 
 			// Avanzamos a la siguiente tienda
-			this.listaTiendas.pop();
+			tiendaActual = tiendaActual + 1;
 
 			// Comprobamos si quedan productos por comprar, y no conocemos mas tiendas a las que ir
 			if ((!this.productsLeft() && this.listaTiendas.length == 0) || (this.listaTiendas.length == 0)) {
