@@ -154,7 +154,7 @@ function enviarXML(infoMensaje){
         url: 'http://' + infoMensaje.ip_receptor + ":"+infoMensaje.puerto_receptor,
         data: mensaje,
         type: 'POST',
-        async: flase,
+        async: false,
         dataType: 'text',
         contentType: 'text/xml',
 
@@ -175,6 +175,8 @@ function enviarXML(infoMensaje){
         // En caso de error
         error: function(response){
             console.log("Error enviando a "+ infoMensaje.ip_receptor +": "+response);
+
+            respuesta = -1;
             //TODO: Actualizar html con error
         }
     });
@@ -198,24 +200,26 @@ function get_IP() {
     return ipCliente;
 }
 
-function get_Monitor(ip_monitor, ip_cliente){
+function get_Monitor(ip_monitor){
     // https://www.w3schools.com/jquery/ajax_get.asp
     var respuesta;
     $.ajax({
-        url: 'http://' + ip_monitor + ":8000",
-        data: ip_cliente,
-        type: "POST",
+        url: 'http://' + ip_monitor + ":3000?crearCliente",
+        // data: ip_cliente,
+        type: "GET",
         async: false,
         datatype: "text",
         contentType: "text",
 
         success: function(data){
             console.log("Conexion realizada con el Monitor");
+            console.log(data);
             respuesta = leerXML(data);
         },
 
         error: function(response) {
             console.log("No se pudo conectar con el Monitor");
+            repuesta = -1;
         }
     });
     return respuesta;
