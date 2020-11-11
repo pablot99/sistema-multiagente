@@ -148,20 +148,20 @@ function escribir_tiendas(infoMensaje){
 //Funcion JQuery ajax para mandar mensajes y recibir respuesta
 function enviarXML(infoMensaje){
     var respuesta;
-    var mensaje = crearMensaje(infoMensaje)
+    var mensaje = crearMensaje(infoMensaje);
 
     $.ajax({
         url: 'http://' + infoMensaje.ip_receptor + ":"+infoMensaje.puerto_receptor,
         data: mensaje,
         type: 'POST',
         async: false,
-        dataType: 'text',
-        contentType: 'text/xml',
+        // dataType: 'text',
+        // contentType: 'text/xml',
 
         beforeSend: function(request){
             //TODO: Actualizar html
             // console.log("Envio mensaje a: "+infoMensaje.ip_receptor);
-            console.log(mensaje)
+            // console.log(mensaje)
         },
 
         // Recepcion del mensaje
