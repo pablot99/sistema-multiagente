@@ -28,19 +28,19 @@
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Inicio</h5>
-              <form class="form-signin">
+              <form id="formulario" class="form-signin needs-validation" novalidate>
                 <div class="form-label-group mx-2 my-3">
                   <label for="IpComprador">IP Comprador</label>
-                  <input type="string" id="IpComprador" class="form-control" placeholder="IP Comprador"  autofocus>
+                  <input type="string" id="ipComprador" class="form-control" placeholder="IP Comprador"  autofocus>
                 </div>
                 <div class="form-label-group mx-2 my-3">
                   <label for="IpMonitor">IP Monitor</label>
-                  <input type="string" id="IpMonitor" class="form-control" placeholder="IP Monitor"  autofocus>
+                  <input type="string" id="ipMonitor" class="form-control" placeholder="IP Monitor"  autofocus>
                 </div>
                 <div class="form-label-group mx-2 my-3">
                   <label for="NumCompradores">Número de compradores</label>
-                  <input type="string" id="NumCompradores" class="form-control" placeholder="Número de compradores"
-                     autofocus>
+                  <input type="string" id="numCompradores" class="form-control" placeholder="Número de compradores"
+                     autofocus required>
                 </div>
                 <button id="enviar" class="btn btn-lg btn-primary btn-block text-camelcase">Enviar</button>
               </form>
@@ -57,6 +57,7 @@
       <div class="tab-content" id="TabContenido">
         <!-- Aqui van los paneles con la información de cada comprador -->
       </div> 
+      <button id="refresca" class="btn btn-lg btn-primary btn-block text-camelcase">Refresca</button>
     </div>
 
   </main>
