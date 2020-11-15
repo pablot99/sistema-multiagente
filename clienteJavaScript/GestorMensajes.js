@@ -6,27 +6,7 @@
      - Mª Elena Pretel Fernández
      - Daniel García Carretero
 */
-/*
-gestor = new MessageManager('192.168.1.35', '8000', '192.168.1.33', '3');
 
-var infoM = {
-    tipo_mensaje: 'entrada_tienda',
-    id_emisor: 3,
-    ip_emisor: '192.168.1.4',
-    tipo_receptor: 'tienda',
-    id_receptor: 10,
-    ip_receptor: '198.161.1.1',
-    puerto_receptor: '8000',
-    productos: [
-        {id: 5, cantidad: 45},
-        {id: 13, cantidad: 100}
-    ],
-    tiendas: [
-        {id:4, ip: "192.168.1.3", puerto: "8000"},
-        {id:4, ip: "192.168.1.3", puerto: "8000"}
-    ]
-}
-*/
 class MessageManager {
     constructor(ip_monitor, puerto_monitor, ip_emisor, id_emisor) {
 
@@ -152,12 +132,12 @@ class MessageManager {
         });
         return respuesta;
     }
-    
+
     // Genera el mensaje XML completo
     _crearMensaje(infoMensaje) {
 
         //TODO: Cambiar modelo de mensaje cuando se tenga el completo
-        mensaje = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        var mensaje = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             '<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=\"TodosMensajes.xsd\">' +
             this._escribirCabecera(infoMensaje) +
             this._escribirCuerpo(infoMensaje) +
@@ -168,7 +148,6 @@ class MessageManager {
 
     // Genera la cabezara de un mensaje XML para enviar
     _escribirCabecera(infoMensaje) {
-
         return "<head>" +
             "<tipo_mensaje>" +
             infoMensaje.tipo_mensaje +
@@ -201,7 +180,7 @@ class MessageManager {
             "</puerto_receptor>" +
 
             "<time_sent>" +
-            _getTime() +
+            this._getTime() +
             "</time_sent>" +
             "</head>";
     }
@@ -321,3 +300,64 @@ class MessageManager {
     }
 
 }
+
+/* ONLY FOR TESTING PURPOSES. 
+
+**** PARA EL ENVÍO ****
+
+gestor = new MessageManager('192.168.1.35', '8000', '192.168.1.33', '3');
+
+var infoM = {
+    tipo_mensaje: 'entrada_tienda',
+    id_emisor: 3,
+    ip_emisor: '192.168.1.4',
+    tipo_receptor: 'tienda',
+    id_receptor: 10,
+    ip_receptor: '198.161.1.1',
+    puerto_receptor: '8000',
+    productos: [
+        {id: 5, cantidad: 45},
+        {id: 13, cantidad: 100}
+    ],
+    tiendas: [
+        {id:4, ip: "192.168.1.3", puerto: "8000"},
+        {id:4, ip: "192.168.1.3", puerto: "8000"}
+    ]
+}
+
+**** PARA RECEPCIÓN ****
+--> ANTES: obtener xml de infoM con _crearMensaje
+
+parser = new DOMParser();
+xml = parser.parseFromString(mensaje, "text/xml");
+
+xml = mensaje.responseXML;
+
+
+    Ejemplo del return tras procesar el mensaje
+
+    repuesta = {
+        head:{
+            tipo_mensaje: 'whatever',
+            tipo_emisor: "cliente",
+            id_emisor: "3",
+            ip_emisor: "192.168.1.33",
+            puerto_emisor: "-1",
+            tipo_receptor: "tienda",
+            id_receptor: "10",
+            ip_receptor: "192.168.1.35",
+            puerto_receptor: "8000",
+            time_sent: "18:09:10",
+        },
+        body:{
+            productos: [
+                {id: "5", cantidad: "45"},
+                {id: "13", cantidad: "100"}
+            ],
+            tiendas: [
+                {id_tienda: "4", ip_tienda: "192.168.54", puerto_tienda: "8000"}
+                {id_tienda: "5", ip_tienda: "192.168.12", puerto_tienda: "8000"}
+            ]
+        }
+    }
+*/
