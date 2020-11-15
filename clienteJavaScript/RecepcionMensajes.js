@@ -65,7 +65,7 @@ function getProductos(xml){
     var productos = xml.getElementsByTagName('lista_productos')[0].childNodes;
 
     productos.forEach(
-        function(valor, indice, array){
+        function(valor){
             lista.push({
                 id_producto: valor.getElementsByTagName('id_producto')[0].childNodes[0].nodeValue,
                 cantidad: valor.getElementsByTagName('cantidad')[0].childNodes[0].nodeValue
@@ -82,7 +82,7 @@ function getTiendas(xml){
     var tiendas = xml.getElementsByTagName('lista_tiendas')[0].childNodes;
 
         tiendas.forEach(
-            function(valor, indice, array){
+            function(valor){
                 lista.push({
                     id_tienda: valor.getElementsByTagName('id_tienda')[0].childNodes[0].nodeValue,
                     ip_tienda: valor.getElementsByTagName('ip_tienda')[0].childNodes[0].nodeValue,
