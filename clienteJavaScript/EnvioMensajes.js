@@ -159,9 +159,6 @@ function enviarXML(infoMensaje){
         // contentType: 'text/xml',
 
         beforeSend: function(request){
-            $.post(
-                'http://' ip_monitor + ':' + port_monitor +
-            )
             //TODO: Actualizar html
             // console.log("Envio mensaje a: "+infoMensaje.ip_receptor);
             // console.log(mensaje)
