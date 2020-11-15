@@ -128,6 +128,31 @@ class MessageManager {
         return contenido;
     }
 
+    get_Monitor() {
+        // https://www.w3schools.com/jquery/ajax_get.asp
+        var respuesta;
+        $.ajax({
+            url: this.urlMonitorCrearCliente,
+            // data: ip_cliente,
+            type: "GET",
+            async: false,
+            datatype: "text",
+            contentType: "text",
+
+            success: function (data) {
+                console.log("Conexion realizada con el Monitor");
+                console.log(data);
+                respuesta = this.leerXML(data);
+            },
+
+            error: function (response) {
+                console.log("No se pudo conectar con el Monitor");
+                repuesta = -1;
+            }
+        });
+        return respuesta;
+    }
+    
     // Genera el mensaje XML completo
     _crearMensaje(infoMensaje) {
 
@@ -259,31 +284,6 @@ class MessageManager {
                 "</tienda>";
         }
         return mensajes += "</lista_tiendas>";
-    }
-
-    get_Monitor() {
-        // https://www.w3schools.com/jquery/ajax_get.asp
-        var respuesta;
-        $.ajax({
-            url: this.urlMonitorCrearCliente,
-            // data: ip_cliente,
-            type: "GET",
-            async: false,
-            datatype: "text",
-            contentType: "text",
-
-            success: function (data) {
-                console.log("Conexion realizada con el Monitor");
-                console.log(data);
-                respuesta = this.leerXML(data);
-            },
-
-            error: function (response) {
-                console.log("No se pudo conectar con el Monitor");
-                repuesta = -1;
-            }
-        });
-        return respuesta;
     }
 
     // Procesa los productos
