@@ -13,6 +13,8 @@
             <xs:enumeration value="confirmacion_compra"/>
             <xs:enumeration value="solicitar_tiendas"/>
             <xs:enumeration value="respuesta_tiendas_conocidas"/>
+            <xs:enumeration value="salida_tienda"/>
+            <xs:enumeration value="ACK"/>
             <xs:enumeration value="finalizacion_cliente"/>
             <xs:enumeration value="finalizacion_tienda"/>
 
@@ -142,6 +144,24 @@
                 <xs:sequence>
                     <xs:element name="lista_tiendas" type="tipoListaTiendas"/>
                 </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje que enviará el cliente para indicar que sale de la tienda
+    Con este mensaje se pretende que la tienda sea consciente y reaciones en consecuencia -->
+    <xs:complexType name="salida_tienda">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mensaje de confirmacion estandar. Este mensaje será usado como un ACK convencional.
+    p.e. Como respuesta de que el monitor recibe los log. O cuando el cliente comunique a la tienda que sale. -->
+    <xs:complexType name="ACK">
+        <xs:complexContent>
+            <xs:extension base="tipoBody">
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
