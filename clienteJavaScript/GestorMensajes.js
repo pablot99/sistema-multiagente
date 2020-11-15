@@ -6,20 +6,37 @@
      - Mª Elena Pretel Fernández
      - Daniel García Carretero
 */
+/*
+gestor = new MessageManager('192.168.1.35', '8000', '192.168.1.33', '3');
 
+var infoM = {
+    tipo_mensaje: 'entrada_tienda',
+    id_emisor: 3,
+    ip_emisor: '192.168.1.4',
+    tipo_receptor: 'tienda',
+    id_receptor: 10,
+    ip_receptor: '198.161.1.1',
+    puerto_receptor: '8000',
+    productos: [
+        {id: 5, cantidad: 45},
+        {id: 13, cantidad: 100}
+    ],
+    tiendas: [
+        {id:4, ip: "192.168.1.3", puerto: "8000"},
+        {id:4, ip: "192.168.1.3", puerto: "8000"}
+    ]
+}
+*/
 class MessageManager {
-    constructor(ip_monitor, puerto_monitor, ip_emisor, id_emisor,
-        interfaceCrearCliente = 'crearCliente=1',
-        interfaceDuplicados = 'nolose:(',
-        interfaceFinalizacion = 'nolose:(') {
+    constructor(ip_monitor, puerto_monitor, ip_emisor, id_emisor) {
 
         this.ip_monitor = ip_monitor;
         this.puerto_monitor = puerto_monitor;
         this.ip_emisor = ip_emisor;
         this.id_emisor = id_emisor;
-        this.interfaceCrearCliente = interfaceCrearCliente;
-        this.interfaceDuplicados = interfaceDuplicados;
-        this.interfaceFinalizacion = interfaceFinalizacion;
+        this.interfaceCrearCliente = 'crearCliente=1';
+        this.interfaceDuplicados = 'nolose:(';
+        this.interfaceFinalizacion = 'nolose:(';
 
         this.tipo_emisor = 'comprador';
         this.puerto_emisor = -1;
@@ -31,7 +48,7 @@ class MessageManager {
     //Funcion JQuery ajax para mandar mensajes y recibir respuesta
     enviarXML(infoMensaje) {
         var respuesta;
-        var mensaje = _crearMensaje(infoMensaje);
+        var mensaje = this._crearMensaje(infoMensaje);
 
         $.ajax({
             url: 'http://' + infoMensaje.ip_receptor + ":" + infoMensaje.puerto_receptor,
@@ -45,7 +62,7 @@ class MessageManager {
                 if (mensaje.tipo_receptor != 'monitor') {
                     $.post(
                         this.urlMonitorDuplicados,
-                        data = mensaje
+                        mensaje
                     )
                 }
                 //TODO: Actualizar html
@@ -57,7 +74,7 @@ class MessageManager {
             success: function (response) {
                 console.log("Mensaje recibido de: " + infoMensaje.ip_receptor);
                 console.log(response)
-                respuesta = leerXML(response);
+                respuesta = this.leerXML(response);
                 console.log("Mensaje recibido de " + infoMensaje.ip_receptor + " procesado");
             },
 
@@ -98,13 +115,13 @@ class MessageManager {
 
         // Productos
         try {
-            contenido["body"]['lista_productos'] = _getProductos(xml);
+            contenido["body"]['lista_productos'] = this._getProductos(xml);
         } catch (error) { }
 
 
         // Tiendas
         try {
-            contenido["body"]['lista_tiendas'] = _getTiendas(xml);
+            contenido["body"]['lista_tiendas'] = this._getTiendas(xml);
         } catch (error) { }
 
 
@@ -117,8 +134,8 @@ class MessageManager {
         //TODO: Cambiar modelo de mensaje cuando se tenga el completo
         mensaje = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             '<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=\"TodosMensajes.xsd\">' +
-            _escribirCabecera(infoMensaje) +
-            _escribirCuerpo(infoMensaje) +
+            this._escribirCabecera(infoMensaje) +
+            this._escribirCuerpo(infoMensaje) +
             "</root>";
 
         return mensaje;
@@ -170,15 +187,15 @@ class MessageManager {
 
         switch (infoMensaje.tipo_mensaje) {
             case 'entrada_tienda':
-                mensaje += _escribir_productos(infoMensaje);
+                mensaje += this._escribir_productos(infoMensaje);
                 break;
 
             case 'solicitar_tiendas':
-                mensaje += _escribir_tiendas(infoMensaje);
+                mensaje += this._escribir_tiendas(infoMensaje);
                 break;
 
             case 'finalizacion_cliente':
-                mensaje += _escribir_productos(infoMensaje);
+                mensaje += this._escribir_productos(infoMensaje);
                 break;
 
             default:
@@ -192,9 +209,9 @@ class MessageManager {
     //Obtiene la hora actual (LUNA)
     _getTime() {
         var date = new Date();
-        var hours = _addZero(date.getHours());
-        var minutes = _addZero(date.getMinutes());
-        var seconds = _addZero(date.getSeconds());
+        var hours = this._addZero(date.getHours());
+        var minutes = this._addZero(date.getMinutes());
+        var seconds = this._addZero(date.getSeconds());
 
         var time = hours + ":" + minutes + ":" + seconds;
         return time;
@@ -258,7 +275,7 @@ class MessageManager {
             success: function (data) {
                 console.log("Conexion realizada con el Monitor");
                 console.log(data);
-                respuesta = leerXML(data);
+                respuesta = this.leerXML(data);
             },
 
             error: function (response) {
