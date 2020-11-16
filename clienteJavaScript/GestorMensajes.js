@@ -8,12 +8,12 @@
 */
 
 class MessageManager {
-    constructor(ip_monitor, puerto_monitor, ip_emisor, id_emisor) {
+    constructor(ip_monitor, puerto_monitor, ip_emisor, log) {
 
         this.ip_monitor = ip_monitor;
         this.puerto_monitor = puerto_monitor;
         this.ip_emisor = ip_emisor;
-        this.id_emisor = id_emisor;
+        this.id_emisor = -1;
         this.interfaceCrearCliente = 'crearCliente=1';
         this.interfaceDuplicados = 'nolose:(';
         this.interfaceFinalizacion = 'nolose:(';
@@ -21,13 +21,16 @@ class MessageManager {
         this.tipo_emisor = 'comprador';
         this.puerto_emisor = -1;
 
-        this.urlMonitor = 'http://' + this.ip_monitor + ':' + this.port_monitor;
+        this.urlMonitor = 'http://' + this.ip_monitor + ':' + this.puerto_monitor;
         this.urlMonitorDuplicados = this.urlMonitor + '?' + this.interfaceDuplicados;
         this.urlMonitorCrearCliente = this.urlMonitor + "?" + this.interfaceCrearCliente;
+
+        this.log = log;
     }
+
     //Funcion JQuery ajax para mandar mensajes y recibir respuesta
     enviarXML(infoMensaje) {
-        var respuesta;
+        var respuesta = -1, thisClass=this;
         var mensaje = this._crearMensaje(infoMensaje);
 
         $.ajax({
@@ -39,9 +42,9 @@ class MessageManager {
             // contentType: 'text/xml',
 
             beforeSend: function () {
-                if (mensaje.tipo_receptor != 'monitor') {
+                if (infoMensaje.tipo_receptor != 'monitor') {
                     $.post(
-                        this.urlMonitorDuplicados,
+                        thisClass.urlMonitorDuplicados,
                         mensaje
                     )
                 }
@@ -54,15 +57,13 @@ class MessageManager {
             success: function (response) {
                 console.log("Mensaje recibido de: " + infoMensaje.ip_receptor);
                 console.log(response)
-                respuesta = this.leerXML(response);
+                respuesta = thisClass.leerXML(response);
                 console.log("Mensaje recibido de " + infoMensaje.ip_receptor + " procesado");
             },
 
             // En caso de error
             error: function (response) {
                 console.log("Error enviando a " + infoMensaje.ip_receptor + ": " + response);
-
-                respuesta = -1;
                 //TODO: Actualizar html con error
             }
         });
@@ -73,7 +74,7 @@ class MessageManager {
     // Procesas los mensajes llegados como respuesta
     leerXML(xml) {
         var contenido, parser;
-        // TODO: Si hay un campo vacio que pasa
+        // TODO: Si hay un campo vacio que pasa --> Return -1 (Se debe validar el mensaje eso. Eso garantiza que no haya vacios)
         contenido = {
             head: {
                 tipo_mensaje: xml.getElementsByTagName('tipo_mensaje')[0].childNodes[0].nodeValue,
@@ -110,26 +111,33 @@ class MessageManager {
 
     get_Monitor() {
         // https://www.w3schools.com/jquery/ajax_get.asp
-        var respuesta;
+
+        var respuesta = -1, thisClass = this;
+
         $.ajax({
             url: this.urlMonitorCrearCliente,
-            // data: ip_cliente,
             type: "GET",
             async: false,
             datatype: "text",
-            contentType: "text",
+            contentType:"text",
+
+            beforeSend: function(){
+                console.log("Intentando obtener datos de: " + thisClass.urlMonitorCrearCliente);
+            },
 
             success: function (data) {
                 console.log("Conexion realizada con el Monitor");
                 console.log(data);
-                respuesta = this.leerXML(data);
+                respuesta = thisClass.leerXML(data);
             },
 
             error: function (response) {
                 console.log("No se pudo conectar con el Monitor");
-                repuesta = -1;
             }
         });
+
+        this.id_emisor = respuesta.body.id_receptor;
+
         return respuesta;
     }
 

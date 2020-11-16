@@ -11,6 +11,7 @@ class Comprador {
 		this.tiempoConsumido = 0;
 		this.log = log;
 
+		this.GestorMensajes = new MessageManager(ipMonitor, puertoMonitor, ip, log);
 	}
 
 	// Comprueba si el producto está incluido en la lista
@@ -115,8 +116,6 @@ class Comprador {
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
-			id_emisor: this.id,
-			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
 			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
 			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
@@ -124,7 +123,7 @@ class Comprador {
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
-		var respuesta = await enviarXML(infoM);
+		var respuesta = await this.GestorMensajes.enviarXML(infoM);
 		return respuesta;
 	}
 
@@ -150,8 +149,6 @@ class Comprador {
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
-			id_emisor: this.id,
-			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
 			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
 			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
@@ -159,15 +156,14 @@ class Comprador {
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
-		await EnvioMensajes.enviarXML(infoM)
+		var respuesta = await this.GestorMensajes.enviarXML(infoM);
+		return respuesta;
 	}
 
 	async askForShops(tiendaActual) { 
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'solicitar_tiendas',
-			id_emisor: this.id,
-			ip_emisor: this.ip,
 			tipo_receptor: 'tienda',
 			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
 			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
@@ -175,7 +171,7 @@ class Comprador {
 			productos: this.listaCompra,
 			tiendas: this.listaTiendas
 		}
-		var respuesta = await EnvioMensajes.enviarXML(infoM);
+		var respuesta = await this.GestorMensajes.enviarXML(infoM);
 		return respuesta;
 
 	}
@@ -251,21 +247,19 @@ class Comprador {
 					this.addToLog("El cliente " + this.id + " ha terminado sus compras con exito.");
 				}
 			}
-			// Ha cumplido su mision
+			// Ha cumplido su mision TODO: No ha cumplido su mision. Su mision terminara al salir del while
 			//CAMBIOS AQUI
 			var mensaje = {
 				tipo_mensaje: 'finalizacion_cliente',
-				id_emisor: this.id,
-				ip_emisor: this.ip,
 				tipo_receptor: 'monitor',
-				id_receptor: 0,
+				id_receptor: -1,
 				ip_receptor: this.ipMonitor,
 				puerto_receptor: this.puertoMonitor,
 				productos: this.listaCompra,
 				tiendas: this.listaTiendas
 			}
 			// Envia un mensaje al monitor indicando que ha terminado
-			await enviarXML(mensaje);
+			await this.GestorMensajes.enviarXML(infoM);
 		}
 	}
 
