@@ -102,17 +102,17 @@ class Comprador {
 	//Pide productos y tiendas
 	async pideIni() {
 		//CAMBIOS AQUI
-		var respuesta = await get_Monitor(this.ipMonitor);
-		if(respuesta!=-1){
-			this.listaCompra = respuesta["body"]['lista_productos'];
-			this.listaTiendas = respuesta["body"]['lista_tiendas'];
-			this.id = respuesta["head"]['id'];
-			this.tiempoConsumido = this.tiempoConsumido + respuesta["head"]['time_sent']
+		var respuesta = await this.GestorMensajes.get_Monitor();
+		if (respuesta != -1) {
+			this.listaCompra = respuesta['body']['lista_productos'];
+			this.listaTiendas = respuesta['body']['lista_tiendas'];
+			this.id = respuesta['head']['id'];
+			this.tiempoConsumido = this.tiempoConsumido + respuesta['head']['time_sent']
 		}
 		return respuesta;
 	}
 
-	async senalaEntrada(tiendaActual) { 
+	async senalaEntrada(tiendaActual) {
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
@@ -160,7 +160,7 @@ class Comprador {
 		return respuesta;
 	}
 
-	async askForShops(tiendaActual) { 
+	async askForShops(tiendaActual) {
 		//CAMBIOS AQUI
 		var infoM = {
 			tipo_mensaje: 'solicitar_tiendas',
@@ -176,14 +176,26 @@ class Comprador {
 
 	}
 
+	async salidaTienda(tiendaActual) {
+		var infoM = {
+			tipo_mensaje: 'salida_tienda',
+			tipo_receptor: 'tienda',
+			id_receptor: this.listaTiendas[tiendaActual].id_tienda,
+			ip_receptor: this.listaTiendas[tiendaActual].ip_tienda,
+			puerto_receptor: this.listaTiendas[tiendaActual].puerto_tienda,
+		}
+		var respuesta = await this.GestorMensajes.enviarXML(infoM)
+		return respuesta;
+	}
+
 	async run() {
 		// Pide productos y tiendas al monitor
 		var resp = await this.pideIni();
-		if (resp==-1){
+		if (resp == -1) {
 			this.addToLog("El cliente " + this.id + " ha obtenido los datos del monitor " + this.ipMonitor + " con fracaso.");
 			return null; // Fianliza si error devolviendo nulo
 		}
-	
+
 		this.addToLog("El cliente " + this.id + " ha obtenido los datos del monitor " + this.ipMonitor + " con exito.");
 		var tiendaActual = 0;
 		// Mientras queden productos por comprar
@@ -200,12 +212,12 @@ class Comprador {
 			// Si no hay ningun error al entrar en la tienda
 			if (res != -1) {
 				this.addToLog("El cliente " + this.id + " se ha conectado a la tienda " + this.listaTiendas[0].id_tienda + " y comprado con exito.");
-				var productos = res["body"]['lista_productos']
+				var productos = res['body']['lista_productos']
 				//Comprueba si tiene algun producto que necesite el cliente
 				var i = 0;
 				while (i < productos.length) {
 					// Procesa los productos comprados
-					this.reduceProductsQuantity(productos[i].id_producto, productos[i].cantidad);
+					this.reduceProductsQuantity(productos[i].id, productos[i].cantidad);
 					i++;
 				}
 
@@ -222,7 +234,7 @@ class Comprador {
 				// Espera a que un cliente le pase la lista de las tiendas
 				resultado = this.askForShops(tiendaActual);
 				if (resultado != -1) {
-					var tiendas = resultado["body"]['lista_tiendas'];
+					var tiendas = resultado['body']['lista_tiendas'];
 					//Añadimos las tiendas nuevas a las actuales
 					this.listaTiendas = this.agregarTiendas(tiendas);
 				} else {
@@ -234,33 +246,35 @@ class Comprador {
 				}
 			}
 
+			this.salidaTienda(tiendaActual);
+
 			// Avanzamos a la siguiente tienda
 			tiendaActual = tiendaActual + 1;
 
 			// Comprobamos si quedan productos por comprar, y no conocemos mas tiendas a las que ir
-			if ((!this.productsLeft() && this.listaTiendas.length == 0) || (this.listaTiendas.length == 0)) {
-				//Fin de la compra
-				if (this.productsLeft()) {
-					//Compra fallida (no hemos comprado todos los productos)
-					this.addToLog("El cliente " + this.id + " no ha sido capaz de terminar sus compras con exito.");
-				} else {
-					this.addToLog("El cliente " + this.id + " ha terminado sus compras con exito.");
-				}
-			}
-			// Ha cumplido su mision TODO: No ha cumplido su mision. Su mision terminara al salir del while
-			//CAMBIOS AQUI
-			var mensaje = {
-				tipo_mensaje: 'finalizacion_cliente',
-				tipo_receptor: 'monitor',
-				id_receptor: -1,
-				ip_receptor: this.ipMonitor,
-				puerto_receptor: this.puertoMonitor,
-				productos: this.listaCompra,
-				tiendas: this.listaTiendas
-			}
-			// Envia un mensaje al monitor indicando que ha terminado
-			await this.GestorMensajes.enviarXML(infoM);
-		}
-	}
 
+		}
+		//if ((!this.productsLeft() && this.listaTiendas.length == 0) || (this.listaTiendas.length == 0)) {
+		//Fin de la compra
+		if (this.productsLeft()) {
+			//Compra fallida (no hemos comprado todos los productos)
+			this.addToLog("El cliente " + this.id + " no ha sido capaz de terminar sus compras con exito.");
+		} else {
+			this.addToLog("El cliente " + this.id + " ha terminado sus compras con exito.");
+		}
+		//}
+		// Ha cumplido su mision TODO: No ha cumplido su mision. Su mision terminara al salir del while
+		//CAMBIOS AQUI
+		var mensaje = {
+			tipo_mensaje: 'finalizacion_cliente',
+			tipo_receptor: 'monitor',
+			id_receptor: -1,
+			ip_receptor: this.ipMonitor,
+			puerto_receptor: this.puertoMonitor,
+			productos: this.listaCompra,
+			tiendas: this.listaTiendas
+		}
+		// Envia un mensaje al monitor indicando que ha terminado
+		await this.GestorMensajes.enviarXML(infoM);
+	}
 }
