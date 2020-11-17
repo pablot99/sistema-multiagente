@@ -148,20 +148,20 @@ function escribir_tiendas(infoMensaje){
 //Funcion JQuery ajax para mandar mensajes y recibir respuesta
 function enviarXML(infoMensaje){
     var respuesta;
-    var mensaje = crearMensaje(infoMensaje)
+    var mensaje = crearMensaje(infoMensaje);
 
     $.ajax({
         url: 'http://' + infoMensaje.ip_receptor + ":"+infoMensaje.puerto_receptor,
         data: mensaje,
         type: 'POST',
         async: false,
-        dataType: 'text',
-        contentType: 'text/xml',
+        // dataType: 'text',
+        // contentType: 'text/xml',
 
         beforeSend: function(request){
             //TODO: Actualizar html
             // console.log("Envio mensaje a: "+infoMensaje.ip_receptor);
-            console.log(mensaje)
+            // console.log(mensaje)
         },
 
         // Recepcion del mensaje
@@ -182,22 +182,6 @@ function enviarXML(infoMensaje){
     });
 
     return respuesta;
-}
-
-// WARNING: IP global, no local
-function get_IP() {
-    var ipCliente;
-	// Funcion jQuery que obtiene la ip de la maquina
-	$.ajax({
-		url: 'https://ipinfo.io/',
-		async: false,
-		dataType: 'json',
-		contentType: 'application/j-son;charset=UTF-8',
-		success: function (data) {
-			ipCliente = data.ip
-		}
-    });
-    return ipCliente;
 }
 
 function get_Monitor(ip_monitor){
