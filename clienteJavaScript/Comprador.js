@@ -140,6 +140,7 @@ class Comprador {
 
 	//Actualiza el log
 	addToLog(string) {
+		console.log(string);
 		this.log.push(string);
 		//Actualiza el monitor en pantalla si el monitor activo es el del comprador
 		requestUpdate(this.id);

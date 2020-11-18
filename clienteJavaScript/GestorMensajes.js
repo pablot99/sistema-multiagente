@@ -33,6 +33,8 @@ class MessageManager {
         var respuesta = -1, thisClass=this;
         var mensaje = this._crearMensaje(infoMensaje);
 
+        console.log(mensaje);
+
         $.ajax({
             url: 'http://' + infoMensaje.ip_receptor + ":" + infoMensaje.puerto_receptor,
             data: mensaje,
@@ -208,6 +210,9 @@ class MessageManager {
 
             case 'finalizacion_cliente':
                 mensaje += this._escribir_productos(infoMensaje);
+                break;
+
+            case 'salida_tienda':
                 break;
 
             default:
