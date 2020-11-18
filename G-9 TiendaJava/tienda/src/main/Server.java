@@ -53,15 +53,15 @@ public class Server {
         if (t != null) {
             System.out.println("Cliente " + idCliente + " ha entrado a la tienda " + idTienda + " con la lista de la compra " + listaCompra);
             t.entraUnNuevoCliente(new Cliente(ipCliente, puertoCliente, idCliente));
-            String mensaje = t.Comprar(listaCompra);
-            SendPost.enviarMensaje(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "productosDisponibles", mensaje);
+            ArrayList<Producto> disponibilidad = t.Comprar(listaCompra);
+            SendPost.enviaMensajeProductosDisponibles(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), "productosDisponibles", disponibilidad);
             if (t.compruebaStock()) {
-                SendPost.enviarMensajeMonitor(new Agente(ipLocal, puertoLocal, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "finalizacion_tienda", "");
+                SendPost.enviaMensajeFinalizaTienda(new Agente(ipLocal, puertoLocal, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "finalizacion_tienda");
                 //listaTiendas.remove(t);
             }
         } else {
             System.out.println("El cliente " + idCliente + " ha intentado entrar a la tienda " + idTienda + " pero está cerrada");
-            SendPost.enviarMensaje(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "productosDisponibles", "<lista_productos></lista_productos>");
+            SendPost.enviaMensajeProductosDisponibles(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), "productosDisponibles", new ArrayList<Producto>());
         }
 
     }
@@ -73,16 +73,28 @@ public class Server {
             for (int i=0;i<t.nClientes;i++) {
                 if (t.listaClientes.get(i).id == idCliente) {
                     t.listaClientes.get(i).AddTiendasConocidas(tiendasConocidas);
-                    t.saleUnCliente(t.listaClientes.get(i));
+                    
                 }
             }
-            String mensaje = t.DevolverListaTiendas();
-            SendPost.enviarMensaje(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "tiendasConocidas", mensaje);
+            ArrayList<Tienda> tiendas = t.DevolverListaTiendas();
+            SendPost.enviaMensajeTiendasConocidas(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id),"tiendasConocidas",tiendas);
         }else{
             System.out.println("El cliente " + idCliente + " ha intentado pedir tiendas conocidas a la tienda " + idTienda + " pero está cerrada");
-            SendPost.enviarMensaje(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), new Agente(ipMonitor, puertoMonitor, "monitor", 0), "productosDisponibles", "<lista_tiendas></lista_tiendas>");
+            SendPost.enviaMensajeTiendasConocidas(new Agente(ipCliente, puertoCliente, "cliente", idCliente), new Agente(t.ip, t.puerto, "tienda", t.id), "productosDisponibles", new ArrayList<Tienda>());
         }
 
     }
+    
+    
+    public void saleCliente(int idCliente, String ipCliente, int puertoCliente, int idTienda){
+        Tienda t=this.encuentraTienda(idTienda);
+        for(int i=0; i<t.nClientes;i++){
+            if(t.listaClientes.get(i).id==idCliente){
+                t.saleUnCliente(t.listaClientes.get(i));
+            }
+        }
+        SendPost.enviaMensajeConfirmaSalida( new Agente(t.ip, t.puerto, "tienda", t.id),new Agente(ipCliente, puertoCliente, "cliente", idCliente), "ACKSalida");
+    }
+
 
 }

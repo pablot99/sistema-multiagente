@@ -54,41 +54,46 @@ public class Tienda {
     }
 
     //devolver lista de tiendas al cliente cuando nos lo solicita
-    public String DevolverListaTiendas() {
-        String resultado = "<lista_tiendas>";
+    public ArrayList<Tienda> DevolverListaTiendas() {
+        ArrayList<Tienda> tiendasConocidas = new ArrayList<Tienda>();
+        //String resultado = "<lista_tiendas>";
         for (Cliente c : listaClientes) {
             for (Tienda t : c.listaTiendas) {
-                resultado += "<tienda><id_tienda>" + t.id + "</id_tienda><ip_tienda>" + t.ip + "</ip_tienda><puerto>"+ t.puerto + "</puerto></tienda>";
+                tiendasConocidas.add(t);
+                //resultado += "<tienda><id_tienda>" + t.id + "</id_tienda><ip_tienda>" + t.ip + "</ip_tienda><puerto>"+ t.puerto + "</puerto></tienda>";
 
             }
 
         }
-        resultado=resultado+"</lista_tiendas>";
-        return resultado;
+        //resultado=resultado+"</lista_tiendas>";
+        return tiendasConocidas;
     }
 
     //comprueba los productos de los que dispone la tienda en función a la lista de productos pasada por el cliente
-    public String Comprar(ArrayList<Producto> listaCompra) {
-        String resultado = "<lista_productos>";
+    public ArrayList<Producto> Comprar(ArrayList<Producto> listaCompra) {
+        //String resultado = "<lista_productos>";
         boolean encontrado=false;
+        ArrayList<Producto> disponible = new ArrayList<Producto>();
         for (Producto c : listaCompra) {
             for (Producto p : listaProductos) {
                 
                 if (p.id==c.id) {
                     
-                    float cantidadProducto = p.cantidadProductoDisponible(c.cantidad);
-                    resultado += "<producto><id_producto>" + p.id + "</id_producto><cantidad>" + cantidadProducto + "</cantidad></producto>";
+                    int cantidadProducto = p.cantidadProductoDisponible(c.cantidad);
+                    disponible.add(new Producto(p.id, cantidadProducto));
+                    //resultado += "<producto><id_producto>" + p.id + "</id_producto><cantidad>" + cantidadProducto + "</cantidad></producto>";
                     encontrado=true;
                     break; //si encuentra el producto, pasa a comprobar el siguiente
                 }
             }
             if(!encontrado){
-                resultado += "<producto><id_producto>" + c.id + "</id_producto><cantidad>" + 0 + "</cantidad></producto>";
+                disponible.add(new Producto(c.id, 0));
+                //resultado += "<producto><id_producto>" + c.id + "</id_producto><cantidad>" + 0 + "</cantidad></producto>";
             }
             encontrado=false;
         }
-        resultado=resultado+"<lista_productos>";
-        return resultado;
+        //resultado=resultado+"<lista_productos>";
+        return disponible;
     }
     
     public boolean compruebaStock(){

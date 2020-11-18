@@ -28,8 +28,9 @@ public class Producto {
             return 0; //no queda nada 
         }
         if(cantidad>this.cantidad){
+            int cantAux=this.cantidad;
             this.cantidad=0;
-            return cantidad; //el cliente solo podrá comprar la cantidad de productos que tenemos en la tienda 
+            return cantAux; //el cliente solo podrá comprar la cantidad de productos que tenemos en la tienda 
         }else{
             this.cantidad-=cantidad;
             return cantidad; //el cliente podrá comprar la cantidad de productos que quería
