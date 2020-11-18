@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../Esquema.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<root>
+    <head>
+        <tipo_mensaje>solicitar_tiendas</tipo_mensaje>
+        <tipo_emisor>comprador</tipo_emisor>
+        <id_emisor>1</id_emisor> 
+        <ip_emisor>127.0.0.1</ip_emisor>
+        <puerto_emisor>400</puerto_emisor>
+        <tipo_receptor>tienda</tipo_receptor>
+        <id_receptor>5</id_receptor>
+        <ip_receptor>127.0.0.1</ip_receptor>
+        <puerto_receptor>80</puerto_receptor>
+        <time_sent>00:00:00</time_sent>
+    </head>
+    <body>
+        <lista_tiendas>
+            <tienda>
+                <id_tienda>7</id_tienda>
+                <ip_tienda>4.4.4.4</ip_tienda>
+                <puerto>500</puerto>
+            </tienda>
+        </lista_tiendas>
+    </body>
+</root>
