@@ -59,7 +59,7 @@ class Comprador {
 	productsLeft() {
 		//recorre todos los productos de la lista de la compra
 		for (var product of this.listaCompra) {
-			if (product.getQuantity() != 0)
+			if (product.cantidad != 0)
 				//si hay un producto con una cantidad superior a 0 devuelve true para especificar que hay productos para comprar
 				return true;
 		}
@@ -106,7 +106,7 @@ class Comprador {
 		if (respuesta != -1) {
 			this.listaCompra = respuesta['body']['lista_productos'];
 			this.listaTiendas = respuesta['body']['lista_tiendas'];
-			this.id = respuesta['head']['id'];
+			this.id = respuesta['head']['id_receptor'];
 			this.tiempoConsumido = this.tiempoConsumido + respuesta['head']['time_sent']
 		}
 		return respuesta;
@@ -114,6 +114,7 @@ class Comprador {
 
 	async senalaEntrada(tiendaActual) {
 		//CAMBIOS AQUI
+
 		var infoM = {
 			tipo_mensaje: 'entrada_tienda',
 			tipo_receptor: 'tienda',

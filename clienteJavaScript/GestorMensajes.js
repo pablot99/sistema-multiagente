@@ -33,7 +33,7 @@ class MessageManager {
         var respuesta = -1, thisClass=this;
         var mensaje = this._crearMensaje(infoMensaje);
 
-        console.log(mensaje);
+        // console.log(mensaje);
 
         $.ajax({
             url: 'http://' + infoMensaje.ip_receptor + ":" + infoMensaje.puerto_receptor,
@@ -131,6 +131,7 @@ class MessageManager {
                 console.log("Conexion realizada con el Monitor");
                 console.log(data);
                 respuesta = thisClass.leerXML(data);
+                this.id_emisor = respuesta.body.id_receptor;
             },
 
             error: function (response) {
@@ -138,7 +139,12 @@ class MessageManager {
             }
         });
 
-        this.id_emisor = respuesta.body.id_receptor;
+        // var parser, xml, respuesta;
+
+        // parser = new DOMParser();
+        // xml = parser.parseFromString("<?xml version=\"1.0\" encoding=\"utf-8\"?><root xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><head><tipo_mensaje>reg_cliente</tipo_mensaje><tipo_emisor>monitor</tipo_emisor><id_emisor>-1</id_emisor><ip_emisor>192.168.1.4</ip_emisor><puerto_emisor>1234</puerto_emisor><tipo_receptor>comprador</tipo_receptor><id_receptor>3</id_receptor><ip_receptor>192.168.1.4</ip_receptor><puerto_receptor>-1</puerto_receptor><time_sent>00:00:00</time_sent></head><body xsi:type=\"reg_cliente\"><lista_productos><producto><id_producto>1</id_producto><cantidad>3</cantidad></producto><producto><id_producto>3</id_producto><cantidad>5</cantidad></producto><producto><id_producto>7</id_producto><cantidad>100</cantidad></producto></lista_productos><lista_tiendas><tienda><id_tienda>10</id_tienda><ip_tienda>192.168.1.5</ip_tienda><puerto>8000</puerto></tienda><tienda><id_tienda>11</id_tienda><ip_tienda>192.168.1.10</ip_tienda><puerto>8000</puerto></tienda></lista_tiendas></body></root>", "text/xml");
+        
+        // respuesta = this.leerXML(xml);
 
         return respuesta;
     }
@@ -148,7 +154,7 @@ class MessageManager {
 
         //TODO: Cambiar modelo de mensaje cuando se tenga el completo
         var mensaje = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-            '<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=\"TodosMensajes.xsd\">' +
+            '<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=\"../esquemas/TodosMensajes.xsd\">' +
             this._escribirCabecera(infoMensaje) +
             this._escribirCuerpo(infoMensaje) +
             "</root>";
@@ -248,7 +254,7 @@ class MessageManager {
         for (let i = 0; i < infoMensaje.productos.length; i++) {
             mensajes += "<producto>" +
                 "<id_producto>" +
-                infoMensaje.productos[i].id +
+                infoMensaje.productos[i].id_producto +
                 "</id_producto>" +
                 "<cantidad>" +
                 infoMensaje.productos[i].cantidad +
@@ -265,13 +271,13 @@ class MessageManager {
         for (let i = 0; i < infoMensaje.tiendas.length; i++) {
             mensajes += "<tienda>" +
                 "<id_tienda>" +
-                infoMensaje.tiendas[i].id +
+                infoMensaje.tiendas[i].id_tienda +
                 "</id_tienda>" +
                 "<ip_tienda>" +
-                infoMensaje.tiendas[i].id +
+                infoMensaje.tiendas[i].ip_tienda +
                 "</ip_tienda>" +
                 "<puerto>" +
-                infoMensaje.tiendas[i].puerto +
+                infoMensaje.tiendas[i].puerto_tienda +
                 "</puerto>" +
                 "</tienda>";
         }
