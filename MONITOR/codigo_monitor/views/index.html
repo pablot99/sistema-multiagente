@@ -13,6 +13,8 @@
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css" />
   <link rel="stylesheet" type="text/css" href="/css/styles.css"">
+  <link rel=" stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
   <title>Index</title>
 </head>
@@ -21,11 +23,32 @@
 
   <div id="nav"></div>
 
+
   <main>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-11 col-12">
-
+          <div class="d-flex justify-content-center">
+            <button id="startButton" type="submit" onclick="startMonitor()"class="btn btn-secondary mt-5 p-3">Arrancar</button>
+          </div>
+          <div id="divInfo" class="mt-5">
+            <div>
+              <p><b>IP Monitor: </b><span id="ipMonitor"></span></p>
+              <p><b>Puerto Monitor: </b><span id="puertoMonitor"></span></p>
+              <p><b>Arrancado: </b><span id="arrancado"></span></p>
+              <p><b>Hora de inicio: </b><span id="horaInicio"></span></p>
+              <p><b>Número de clientes: </b><span id="numClientes"></span></p>
+              <p><b>Número de tiendas: </b><span id="numTiendas"></span></p>
+              <p><b>Número de clientes finalizados: </b><span id="numClientesFinalizados"></span></p>
+              <p><b>Número de tiendas finalizadas: </b><span id="numTiendasFinalizadas"></span></p>
+              <p><b>Productos totales asignados a tiendas: </b><span id="prodTotalesTiendas"></span></p>
+              <p><b>Productos totales asignados a clientes: </b><span id="prodTotalesClientes"></span></p>
+              <p><b>Total de productos comprados: </b><span id="totalComprados"></span></p>
+              <p><b>Número de peticiones de tiendas: </b><span id="numPeticionesTiendas"></span></p>
+              <p><b>Número de peticiones de clientes: </b><span id="numPeticionesClientes"></span></p>
+            </div>
+            <button onclick="getGlobalInfo()" class="btn btn-primary">Refrescar <i class="fa fa-refresh" aria-hidden="true"></i></button>
+          </div>
           <h2 class="display-4 text-center mt-5">Log de mensajes recibidos</h2>
           <div class="table-responsive mt-5 p-2">
             <table id="searchTable" class="table table-bordered table-striped">

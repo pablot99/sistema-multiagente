@@ -12,8 +12,8 @@ xmlCreator.createTienda = function (tienda, productos) {
     
             <tipo_emisor>monitor</tipo_emisor>
             <id_emisor>-1</id_emisor>
-            <ip_emisor>${ipMonitor}</ip_emisor>
-            <puerto_emisor>${puerto}</puerto_emisor>
+            <ip_emisor>${Monitor.ip}</ip_emisor>
+            <puerto_emisor>${Monitor.puerto}</puerto_emisor>
     
             <tipo_receptor>tienda</tipo_receptor>
             <id_receptor>${tienda._id}</id_receptor>
@@ -49,8 +49,8 @@ xmlCreator.createCliente = function (cliente, productos,tiendas) {
 
 		<tipo_emisor>monitor</tipo_emisor>
 		<id_emisor>-1</id_emisor>
-        <ip_emisor>${ipMonitor}</ip_emisor>
-        <puerto_emisor>${puerto}</puerto_emisor>
+        <ip_emisor>${Monitor.ip}</ip_emisor>
+        <puerto_emisor>${Monitor.puerto}</puerto_emisor>
 
 		<tipo_receptor>comprador</tipo_receptor>
 		<id_receptor>${cliente._id}</id_receptor>

@@ -8,6 +8,16 @@ $(document).ready(function () {
     // DataTable
     var table = $('#searchTable').DataTable({
         "language": language,
+        ajax: {
+            url: '/interfaz/llegadas',
+            dataSrc: ""
+        },
+        columns: [
+            { "data": "id_tienda" },
+            { "data": "nombre_tienda" },
+            { "data": "id_cliente" },
+            { "data": "hora_llegada" },
+        ],
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {

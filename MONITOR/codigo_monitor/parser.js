@@ -3,11 +3,12 @@ const stringToDOM = new DOMParser();
 var mensajeService = require('./Database/Service/mensajeService').MensajeService;
 const validator = require('xsd-schema-validator');
 var path = require('path');
+var llegadasService= require('./Database/Service/llegadasService').LlegadasService;
 
 Parser = {}
 
 
-Parser.validarMensaje = async function (rawXML,callback) {
+Parser.validarMensaje = async function (rawXML, callback) {
     // console.log("aqui")
     validator.validateXML(rawXML, path.join(__dirname, "schema.xsd"), callback);
 }
@@ -18,8 +19,22 @@ Parser.parseaMensaje = function (rawXML) {
     var header = Parser.parseaHeader(xmlDoc);
     mensajeService.guardarMensaje(header, rawXML);
 
-
-
+    if (header.tipo_mensaje == "confirmacion_compra") {
+        var datos = Parser.confirmacionCompra(xmlDoc);
+        Monitor.productos_comprados += datos.cantidad_total;
+    }
+    else if (header.tipo_mensaje == "entrada_tienda"){
+        id_tienda= header.id_receptor;
+        id_cliente= header.id_emisor;
+        hora_llegada= header.time_sent;
+        llegadasService.create(id_tienda, id_cliente, hora_llegada);
+    }
+    else if (header.tipo_mensaje == "finalizacion_cliente"){
+        Monitor.numero_clientes_finalizados +=1;
+    }
+    else if (header.tipo_mensaje == "finalizacion_tienda"){
+        Monitor.numero_tiendas_finalizadas +=1;
+    }
 }
 
 
@@ -42,5 +57,36 @@ Parser.parseaHeader = function (xmlDoc) {
 
     return header;
 }
+
+
+Parser.confirmacionCompra = function (xmlDoc) {
+    var datos = {
+        lista_productos: [],
+        cantidad_total: 0
+    };
+
+    var bodyDOM = xmlDoc.getElementsByTagName("body")[0];
+
+    var listaProductos = bodyDOM.getElementsByTagName("lista_productos")[0];
+    for (var i = 0; i < listaProductos.childNodes.length; i++) {
+        if (listaProductos.childNodes[i].tagName == "producto") {
+            let productoDOM = listaProductos.childNodes[i];
+            var producto = {
+                id: 0,
+                cantidad: 0
+            };
+            producto.id = productoDOM.getElementsByTagName("id")[0].firstChild.nodeValue;
+            producto.cantidad = productoDOM.getElementsByTagName("cantidad")[0].firstChild.nodeValue;
+
+            datos.lista_productos.push(producto);
+            datos.cantidad += producto.cantidad;
+        }
+    }
+    return datos;
+}
+
+
+
+
 
 exports.Parser = Parser

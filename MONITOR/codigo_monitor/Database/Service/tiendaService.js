@@ -25,7 +25,7 @@ TiendaService.createTienda = async function (req, numeroProductosTienda) {
     if (ip) {
         ip = ip.replace(new RegExp("::.*:"), "")
         ip = ip === "::1" ? "127.0.0.1" : ip;
-    } 
+    }
     var tienda = new TiendaService.model({ ipAddress: ip, puerto: req.query.puerto, nombre: req.query.nombre });
     var productos = null;
     await tienda.save().then(async (tienda) => {
@@ -36,10 +36,18 @@ TiendaService.createTienda = async function (req, numeroProductosTienda) {
     return { tienda: tienda, productos: productos };
 }
 
-
-TiendaService.getAll = async function (){
+TiendaService.getNombreById = async function (id_tienda) {
+    var nombreTienda = null;
+    await TiendaService.model.findOne({ '_id': id_tienda }).then((tienda) => {
+        if (tienda) {
+            nombreTienda = tienda.nombre;
+        }
+    });
+    return nombreTienda;
+}
+TiendaService.getAll = async function () {
     var tiendas = [];
-    await TiendaService.model.find({}).then((data)=>{
+    await TiendaService.model.find({}).then((data) => {
         tiendas = data;
     });
     return tiendas;
