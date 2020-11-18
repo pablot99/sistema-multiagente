@@ -1,0 +1,13 @@
+Tienda: 2 : entra el comprador: -1
+Tienda: 2 : entra el comprador: -1
+Tienda: 2 : entra el comprador: -1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Tienda: 5 : entra el comprador: 1
+Men:  -- Tienda: 5 : sale el comprador: -1
